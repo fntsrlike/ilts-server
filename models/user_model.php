@@ -10,12 +10,7 @@ class UserModel implements ICrud
         # code...
     }
 
-    function create()
-    {
-        # code...
-    }
-
-    function insert()
+    function create($username, $password, $nickname, $email, $status)
     {
         # code...
     }
@@ -39,5 +34,5 @@ class UserModel implements ICrud
     {
         # code...
     }
-    
+
 }

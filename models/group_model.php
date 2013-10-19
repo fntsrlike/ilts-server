@@ -10,12 +10,7 @@ class GroupModel implements ICrud
         # code...
     }
 
-    function create()
-    {
-        # code...
-    }
-
-    function insert()
+    function create($code, $name, $parentId, $sortNo)
     {
         # code...
     }

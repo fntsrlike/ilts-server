@@ -10,12 +10,7 @@ class IdentifyModel implements ICrud
         # code...
     }
 
-    function create()
-    {
-        # code...
-    }
-
-    function insert()
+    function create($uId, $oId, $oLevel)
     {
         # code...
     }
