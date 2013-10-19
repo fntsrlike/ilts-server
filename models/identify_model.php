@@ -4,11 +4,6 @@
 */
 class IdentifyModel implements ICrud
 {
-    
-    function __construct(argument)
-    {
-        # code...
-    }
 
     function __construct(argument)
     {

@@ -10,11 +10,6 @@ class GroupModel implements ICrud
         # code...
     }
 
-    function __construct(argument)
-    {
-        # code...
-    }
-
     function create()
     {
         # code...
