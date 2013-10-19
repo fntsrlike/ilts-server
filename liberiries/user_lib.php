@@ -2,7 +2,7 @@
 /**
 * 
 */
-class UserLib
+class OUser
 {
     private $id   = null;
     private $username   = null;
