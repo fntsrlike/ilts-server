@@ -10,10 +10,38 @@ class UserLib implements ICrud
         # code...
     }
 
-    function create();
-    function insert();
-    function update();
-    function delete();
-    function list();
-    function set();
+    function __construct(argument)
+    {
+        # code...
+    }
+
+    function create()
+    {
+        # code...
+    }
+
+    function insert()
+    {
+        # code...
+    }
+
+    function update()
+    {
+        # code...
+    }
+
+    function delete()
+    {
+        # code...
+    }
+
+    function list()
+    {
+        # code...
+    }
+    
+    function set()
+    {
+        # code...
+    }
 }
