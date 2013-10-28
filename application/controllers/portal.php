@@ -9,7 +9,12 @@ class Portal extends CI_Controller {
 
     public function index()
     {
-        $this->oauth();
+        if ( empty($this->session->userdata('uid'))) {
+            $this->oauth();
+        }
+        else {
+            redirect(base_url('portal/personal_page'));
+        }
     }
 
     public function oauth()
@@ -17,6 +22,7 @@ class Portal extends CI_Controller {
         # TODO: Check Session.
 
         # TODO: Just a html Page can go to oauth_process
+        $this->load->view('portal/oauth');
     }
 
     public function oauth_process($provider_type = 'google')
@@ -54,7 +60,8 @@ class Portal extends CI_Controller {
                     redirect(base_url('portal/register'));
                 }
                 else {
-                    $session_data['uid'] = $this->portal_model->read_user($user_oauth->uid);;
+                    $session_data['uid'] = $this->portal_model->read_user($user_oauth->uId);
+                    $this->session->set_userdata($session_data);
 
                     redirect(base_url('portal/personal_page'));
                 }
@@ -110,12 +117,24 @@ class Portal extends CI_Controller {
 
         $this->portal_model->create_user_oauth($uid, $provider, $identify_value);
 
-        redirect(base_url('portal/personal_page'));
+        $session_data['uid'] = $uid;
+        $this->session->set_userdata($session_data);        
+
+        redirect(base_url('portal'));
     }
 
     public function personal_page()
     {
-        # TODO: a Page show the user files
+        if ( empty($this->session->userdata('uid'))) {
+            redirect(base_url('portal/'));
+        }
+
+        # Page show the user files
+        $provider = $this->session->userdata('provider');
+        $identify_value = $this->session->userdata('identify_value');
+        $u_id = $this->session->userdata('uid');
+        $data['info'] = "iId='$u_id'; provider='$provider'; identify_value='$identify_value'";
+        $this->load->view('portal/personal_page', $data);
     }
 
 
