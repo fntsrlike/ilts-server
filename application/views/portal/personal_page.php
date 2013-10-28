@@ -5,6 +5,14 @@
     <title>Personal_page</title>
 </head>
 <body>
-    <?php echo $info;?>
+    <div>
+        <?php echo $info;?>
+    </div>
+    
+    <div>
+        <a href="<?php echo base_url('portal/logout');?>">登出</a>    
+    </div>
+    
+     
 </body>
 </html>

@@ -44,23 +44,22 @@ class Portal extends CI_Controller {
         {
             try
             {
-
-                
+        
                 $token = $provider->access($_GET['code']);
                 $user = $provider->get_user_info($token);
                 
                 $user_oauth = $this->portal_model->read_user_oauth_by_provider($provider_type, $user['email']);
                 
+                $session_data['provider']       = 'Google';
+                $session_data['identify_value'] = $user['email'];
+                
                 if ( empty($user_oauth) ) {
-                    $session_data['provider']       = 'Google';
-                    $session_data['identify_value'] = $user['email'];
-
                     $this->session->set_userdata($session_data);
 
                     redirect(base_url('portal/register'));
                 }
                 else {
-                    $session_data['uid'] = $this->portal_model->read_user($user_oauth->uId);
+                    $session_data['uid'] = $user_oauth->uId;
                     $this->session->set_userdata($session_data);
 
                     redirect(base_url('portal/personal_page'));
@@ -133,8 +132,15 @@ class Portal extends CI_Controller {
         $provider = $this->session->userdata('provider');
         $identify_value = $this->session->userdata('identify_value');
         $u_id = $this->session->userdata('uid');
+
         $data['info'] = "iId='$u_id'; provider='$provider'; identify_value='$identify_value'";
         $this->load->view('portal/personal_page', $data);
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url('portal'));
     }
 
 
