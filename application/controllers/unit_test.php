@@ -64,8 +64,14 @@ class Unit_test extends CI_Controller {
             
             case 'read':
             default:
-                var_dump($this->portal_model->read_user('1'));
+                echo '$this->portal_model->read_user(\'99\')';
+                var_dump($this->portal_model->read_user('99'));
+                
+                echo '$this->portal_model->read_user_oauth(\'1\',\'google\')';
                 var_dump($this->portal_model->read_user_oauth('1','google'));
+                
+                echo '$this->portal_model->read_user_oauth_by_provider(\'google\', \'swl@gmail.com\'';
+                var_dump($this->portal_model->read_user_oauth_by_provider('google', 'swl@gmail.com'));
                 break;
         }
         

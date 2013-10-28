@@ -39,6 +39,24 @@ class Portal_model extends CI_Model {
 
     public function read_user_oauth($uId, $provider)
     {
+        $type = $this->provide_to_code($provider);
+
+        $this->db->where('uId = ', $uId);
+        $this->db->where('uOAuthType = ', $type);
+        return $this->db->get('user_oauth')->row();
+    }
+
+    public function read_user_oauth_by_provider($provider, $value)
+    {
+        $type = $this->provide_to_code($provider);
+
+        $this->db->where('uOAuthType = ', $type);
+        $this->db->where('uOAuthValue = ', $value);
+        return $this->db->get('user_oauth')->row();
+    }
+
+    private function provide_to_code($provider)
+    {
         switch (strtolower($provider)) {
             case 'google':
                 $type = 1;
@@ -49,10 +67,8 @@ class Portal_model extends CI_Model {
                 break;
         }
 
-        $this->db->where('uId = ', $uId);
-        $this->db->where('uOAuthType = ', $type);
-        return $this->db->get('user_oauth')->row();
-    }
+        return $type;
+    }    
 
 }
 
