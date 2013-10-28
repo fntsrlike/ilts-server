@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'www.domain.com/development/';
+$config['base_url']	= 'http://localhost/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'LknJNjnjbjbVIv';
 
 /*
 |--------------------------------------------------------------------------
