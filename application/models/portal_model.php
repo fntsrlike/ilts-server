@@ -31,6 +31,29 @@ class Portal_model extends CI_Model {
         $this->db->insert('user_oauth', $insert);
     } 
 
+    public function read_user($uId)
+    {
+        $this->db->where('uId = ', $uId);
+        return $this->db->get('user_list')->row();
+    }
+
+    public function read_user_oauth($uId, $provider)
+    {
+        switch (strtolower($provider)) {
+            case 'google':
+                $type = 1;
+                break;
+            
+            default:
+                $type = 0;
+                break;
+        }
+
+        $this->db->where('uId = ', $uId);
+        $this->db->where('uOAuthType = ', $type);
+        return $this->db->get('user_oauth')->row();
+    }
+
 }
 
 /* End of file portal_model.php */
