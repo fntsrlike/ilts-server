@@ -2,6 +2,11 @@
 
 class Portal extends CI_Controller {
 
+    public function __construct() {
+        parent::__construct();  
+        $this->load->model('portal_model');
+    }
+
     public function index()
     {
         $this->oauth();
@@ -34,7 +39,7 @@ class Portal extends CI_Controller {
             try
             {
 
-                $this->load->model('portal_model');
+                
                 $token = $provider->access($_GET['code']);
                 $user = $provider->get_user_info($token);
                 
@@ -78,13 +83,34 @@ class Portal extends CI_Controller {
 
         # Register Form
         $data['form_action'] = base_url('portal/register_process');
+        $data['provider_value'] = $this->session->userdata('identify_value');
+
         $this->load->view('portal/register', $data);
     }
 
     public function register_process()
     {
-        # TODO: If no Special POST argument, redirect to oauth page.
-        # TODO: Create Files into DB, and  redirect to personal.
+        $provider = $this->session->userdata('provider');
+        $identify_value = $this->session->userdata('identify_value');
+
+        # If no Special POST argument, redirect to oauth page.
+        if ($this->input->post('value') != $identify_value) {
+            exit('The process must be something wrong!');
+        }
+
+        if ($this->portal_model->read_user_oauth_by_provider($provider, $identify_value)) {
+            exit('You have use this provider to register before!');
+        }
+
+        # Create Files into DB, and redirect to personal.
+        $name = $this->input->post('username');        
+        $this->portal_model->create_user($name, 0);
+
+        $uid = $this->db->insert_id();
+
+        $this->portal_model->create_user_oauth($uid, $provider, $identify_value);
+
+        redirect(base_url('portal/personal_page'));
     }
 
     public function personal_page()
