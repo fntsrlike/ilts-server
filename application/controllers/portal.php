@@ -33,6 +33,7 @@ class Portal extends CI_Controller {
         {
             try
             {
+
                 $this->load->model('portal_model');
                 $token = $provider->access($_GET['code']);
                 $user = $provider->get_user_info($token);
@@ -67,9 +68,17 @@ class Portal extends CI_Controller {
 
     public function register()
     {
-        # TODO: If login and has registered, redirect to personal page
+        # If login and has registered, redirect to personal page
+        if ( empty($this->session->userdata('provider')) || empty($this->session->userdata('identify_value')) ) {
+            redirect(base_url('portal/oauth'));
+        }
+        elseif ( !empty($this->session->userdata('uid'))) {
+            redirect(base_url('portal/personal_page'));
+        }
 
-        # TODO: Register Form
+        # Register Form
+        $data['form_action'] = base_url('portal/register_process');
+        $this->load->view('portal/register', $data);
     }
 
     public function register_process()
