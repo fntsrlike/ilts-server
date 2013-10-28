@@ -5,23 +5,22 @@ class Portal extends CI_Controller {
     public function __construct() {
         parent::__construct();  
         $this->load->model('portal_model');
+
     }
 
     public function index()
-    {
-        if ( empty($this->session->userdata('uid'))) {
-            $this->oauth();
-        }
-        else {
-            redirect(base_url('portal/personal_page'));
-        }
+    {    
+        $this->oauth();   
     }
 
     public function oauth()
     {
-        # TODO: Check Session.
-
-        # TODO: Just a html Page can go to oauth_process
+        # Check Session.
+        if ( !empty($this->session->userdata('uid'))) {
+            redirect(base_url('portal/personal_page'));
+        }
+        
+        # Just a html Page can go to oauth_process
         $this->load->view('portal/oauth');
     }
 
