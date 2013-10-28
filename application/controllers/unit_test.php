@@ -52,6 +52,32 @@ class Unit_test extends CI_Controller {
         }   
     }
 
+    public function portal_model_test($action = '')
+    {
+        $this->load->model('portal_model');
+
+        switch ($action) {
+            case 'create':
+                $this->portal_model->create_user('peter', '1');
+                $this->portal_model->create_user_oauth('1', 'Google', 'swl@gmail.com');
+                break;
+            
+            case 'read':
+            default:
+                echo '$this->portal_model->read_user(\'99\')';
+                var_dump($this->portal_model->read_user('99'));
+                
+                echo '$this->portal_model->read_user_oauth(\'1\',\'google\')';
+                var_dump($this->portal_model->read_user_oauth('1','google'));
+                
+                echo '$this->portal_model->read_user_oauth_by_provider(\'google\', \'swl@gmail.com\'';
+                var_dump($this->portal_model->read_user_oauth_by_provider('google', 'swl@gmail.com'));
+                break;
+        }
+        
+        echo 'finished!';
+    }
+
 }
 
 /* End of file unit_test.php */
