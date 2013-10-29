@@ -26,7 +26,17 @@ class Identify_model extends CI_Model {
 
         return $user_obj_arr;        
 
-    }    
+    }
+
+    public function create_identify($uId, $oId, $level, $status = '0')
+    {
+        $insertArr['uId']       = $uId;
+        $insertArr['oId']       = $oId;
+        $insertArr['iLevel']    = $level;
+        $insertArr['iStatus']   = $status;
+
+        $this->db->insert('identify_tag', $insertArr);
+    }
 
 }
 
