@@ -1,4 +1,2 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assests/tree.css');?>" />
-<div class="tree">
+  <h2>Organization Tree</h2>
   <?php echo $tree;?>
-</div>

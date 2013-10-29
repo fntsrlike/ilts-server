@@ -10,7 +10,7 @@
         padding-top: 70px; 
     }
   </style>
-  
+  <script src="https://code.jquery.com/jquery.js"></script>
 </head>
 <body>
 

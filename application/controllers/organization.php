@@ -11,15 +11,21 @@ class Organization extends CI_Controller {
 
     public function index()
     {
-        $this->tree();
+        $this->manage();
+    }
+
+    public function manage()
+    {
+        $data['tree'] = $this->organization_model->list_helper(0,2);
+        $this->load->view('header');
+        $this->load->view('organization/manage',$data);
+        $this->load->view('footer');
     }
 
     public function tree()
     {
         $data['tree'] = $this->organization_model->list_helper(0,2);
-        $this->load->view('header');
         $this->load->view('organization/tree',$data);
-        $this->load->view('footer');
     }
 
     public function get_files($oId)
