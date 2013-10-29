@@ -17,11 +17,13 @@ class Portal extends CI_Controller {
     {
         # Check Session.
         if ( !empty($this->session->userdata('uid'))) {
-            redirect(base_url('portal/personal_page'));
+            redirect(base_url('portal/user_page'));
         }
         
         # Just a html Page can go to oauth_process
+        $this->load->view('header');
         $this->load->view('portal/oauth');
+        $this->load->view('footer');
     }
 
     public function oauth_process($provider_type = 'google')
@@ -61,7 +63,7 @@ class Portal extends CI_Controller {
                     $session_data['uid'] = $user_oauth->uId;
                     $this->session->set_userdata($session_data);
 
-                    redirect(base_url('portal/personal_page'));
+                    redirect(base_url('portal/user_page'));
                 }
 
                 
@@ -83,14 +85,16 @@ class Portal extends CI_Controller {
             redirect(base_url('portal/oauth'));
         }
         elseif ( !empty($this->session->userdata('uid'))) {
-            redirect(base_url('portal/personal_page'));
+            redirect(base_url('portal/user_page'));
         }
 
         # Register Form
         $data['form_action'] = base_url('portal/register_process');
         $data['provider_value'] = $this->session->userdata('identify_value');
 
+        $this->load->view('header');
         $this->load->view('portal/register', $data);
+        $this->load->view('footer');
     }
 
     public function register_process()
@@ -121,7 +125,7 @@ class Portal extends CI_Controller {
         redirect(base_url('portal'));
     }
 
-    public function personal_page()
+    public function user_page()
     {
         if ( empty($this->session->userdata('uid'))) {
             redirect(base_url('portal/'));
@@ -132,8 +136,13 @@ class Portal extends CI_Controller {
         $identify_value = $this->session->userdata('identify_value');
         $u_id = $this->session->userdata('uid');
 
-        $data['info'] = "iId='$u_id'; provider='$provider'; identify_value='$identify_value'";
-        $this->load->view('portal/personal_page', $data);
+        $data['id']         = $u_id;
+        $data['provider']   = $provider;
+        $data['identify']   = $identify_value;
+
+        $this->load->view('header');
+        $this->load->view('portal/user_page', $data);
+        $this->load->view('footer');
     }
 
     public function logout()
