@@ -30,6 +30,22 @@ class Organization extends CI_Controller {
         $this->organization_model->create_organ($name, $parent, $sort, '0');
     }
 
+    public function set_process()
+    {
+        $id     = $this->input->post('id');
+        $name   = $this->input->post('name');
+        $parent = $this->input->post('parent');
+        $sort   = $this->input->post('sort');
+
+        $this->organization_model->update_organ($id, $name, $parent, $sort, '0');        
+    }
+
+    public function del_process()
+    {
+        $id     = $this->input->post('id');
+        $this->organization_model->delete_organ($id);
+    }
+
 }
 
 /* End of file organization.php */

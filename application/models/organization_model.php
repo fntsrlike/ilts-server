@@ -31,17 +31,16 @@ class Organization_model extends CI_Model {
         return $this->db->get('organ_tree')->row();
     }
 
-    public function list_organ()
+    public function delete_organ($oId)
     {
-        $this->db->order_by('oParentId', 'asc');
-        $this->db->order_by('oSortNumber', 'asc');
-        return $this->db->get('organ_tree')->result();
+        $this->db->where('oId = ', $oId);
+        $this->db->delete('organ_tree');
     }
 
     public function list_lower($oId)
     {
         $this->db->where('oParentId = ', $oId);
-        $this->db->order_by('oSortNumber', 'asc');
+        $this->db->order_by('oSortNumber', 'as  c');
         return $this->db->get('organ_tree')->result();
     }
 
