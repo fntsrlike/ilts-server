@@ -78,6 +78,32 @@ class Unit_test extends CI_Controller {
         echo 'finished!';
     }
 
+    public function organization_model_test($action)
+    {
+        $this->load->model('organization_model');
+
+        switch ($action) {
+            case 'create':
+                $this->organization_model->create_organ('owo', '0', '0', '8');
+                break;
+            
+            case 'update':
+                $this->organization_model->update_organ('1', '=p', '2', '4', '8');
+                break;
+
+            case 'read':
+                echo '$this->organization_model->read_organ(\'1\')';
+                var_dump($this->organization_model->read_organ('1'));
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        echo 'finished!';
+    }
+
 }
 
 /* End of file unit_test.php */
