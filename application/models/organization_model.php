@@ -55,7 +55,7 @@ class Organization_model extends CI_Model {
             $str .= "<ul>";
 
         foreach ($arr as $row) {
-            $str .= "<li> <a href=\"#\">({$row->oId}) {$row->oName} </a>";
+            $str .= "<li> <a class=\"update_organ\" href=\"#\" oid=\"{$row->oId}\" data-toggle=\"modal\" data-target=\"#updateMenu\">({$row->oId}) {$row->oName} </a>";
             $lower = $this->list_lower($row->oId);
             if (!empty($lower)) {
                 $str .= $this->list_helper($row->oId);
