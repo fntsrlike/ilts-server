@@ -31,6 +31,44 @@ class Organization_model extends CI_Model {
         return $this->db->get('organ_tree')->row();
     }
 
+    public function list_organ()
+    {
+        $this->db->order_by('oParentId', 'asc');
+        $this->db->order_by('oSortNumber', 'asc');
+        return $this->db->get('organ_tree')->result();
+    }
+
+    public function list_lower($oId)
+    {
+        $this->db->where('oParentId = ', $oId);
+        $this->db->order_by('oSortNumber', 'asc');
+        return $this->db->get('organ_tree')->result();
+    }
+
+    public function list_helper($oId)
+    {
+        $arr = $this->list_lower($oId);
+
+        $str = '';
+        if ($oId == 0)
+            $str .= "<ul class=\"tree\">";
+        else
+            $str .= "<ul>";
+
+        foreach ($arr as $row) {
+            $str .= "<li> <a href=\"#\">({$row->oId}) {$row->oName} </a>";
+            $lower = $this->list_lower($row->oId);
+            if (!empty($lower)) {
+                $str .= $this->list_helper($row->oId);
+            }
+            $str .= "</li>";
+        }
+        $str .= "</ul>";
+
+        return $str;
+
+    }
+
 }
 
 /* End of file organization_model.php */

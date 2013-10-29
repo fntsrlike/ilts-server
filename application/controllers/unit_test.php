@@ -96,6 +96,11 @@ class Unit_test extends CI_Controller {
                 var_dump($this->organization_model->read_organ('1'));
                 break;
 
+            case 'list':
+                   $list = $this->organization_model->list_organ();
+                   var_dump($list);
+                   break;   
+
             default:
                 # code...
                 break;
