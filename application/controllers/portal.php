@@ -21,9 +21,7 @@ class Portal extends CI_Controller {
         }
         
         # Just a html Page can go to oauth_process
-        $this->load->view('header');
         $this->load->view('portal/oauth');
-        $this->load->view('footer');
     }
 
     public function oauth_process($provider_type = 'google')
