@@ -11,12 +11,13 @@
     var sort    = form.find( "input[name='sort']" ).val();
     var url     = form.attr( "action" );
    
+
     var data = { 
         "name"  : name, 
         "parent":parent, 
         "sort"  :sort, 
       };
-
+      console.log(url);
     // Send the data using post
     $.post( 
       url, 
@@ -58,3 +59,42 @@
 
   });  
 
+  // Attach a submit handler to the form
+  $("#deleteBtn").click(function() {
+    if (!confirm("您確定要刪除此欄位嗎？")) {
+            return false;
+    }
+
+    // Get some values from elements on the page:
+    var form  = $( "#updateForm" );
+    var id    = form.find( "input[name='id']" ).val();
+    var url   = "/organization/del_process";
+   
+    var data = {
+        "id"    :id
+      };
+
+    // Send the data using post
+    $.post( 
+      url, 
+      data,
+      function() {
+        $(".tree").load('/organization/tree', function(){$.getScript("/assests/organ_manage_reload.js");});
+      }
+    ); 
+
+    $('#updateMenu').modal('hide');
+
+  });  
+
+
+  // Attach a submit handler to the form
+  $("#identifyBtn").click(function() {
+   
+    // Get some values from elements on the page:
+    var form  = $( "#updateForm" );
+    var id    = form.find( "input[name='id']" ).val();
+    var url   = "/identify/manage/" + id;
+
+    window.location.href= url; // 跳转到B目录
+  });  

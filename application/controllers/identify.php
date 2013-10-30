@@ -39,7 +39,7 @@ class Identify extends CI_Controller {
 
     public function manage($oId)
     {
-        $data['organ']  = empty($o_id) ? "Null": "{$o_id->oName}";
+        $data['organ']  = empty($oId) ? "Null": "{$this->organization_model->read_organ($oId)->oName}";
         $data['oId']    = $oId;
 
         $this->load->view('header');

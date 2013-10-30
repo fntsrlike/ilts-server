@@ -1,6 +1,9 @@
 $(".identRemove").click(function(){
   
-
+  if (!confirm("您確定要刪除此欄位嗎？")) {
+          return false;
+  }
+  
   var data = { id : $(this).attr("iid") };
   var url  = '/identify/del_process';
 
