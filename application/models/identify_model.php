@@ -21,8 +21,10 @@ class Identify_model extends CI_Model {
                 $organ = $this->organization_model->read_organ($row->oId)->oName;
             }
 
+            $username = empty($this->portal_model->read_user($row->uId)) ? 'Null' : $this->portal_model->read_user($row->uId)->uName;
+
             $user->id      = $row->iId;
-            $user->user    = $this->portal_model->read_user($row->uId)->uName  . " ({$row->uId})";
+            $user->user    = $username . " ({$row->uId})";
             $user->org     = $organ . " ({$row->oId})";
             $user->level   = $row->iLevel;
             $user->status  = $row->iStatus;

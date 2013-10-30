@@ -2,6 +2,14 @@
 
 class Unit_test extends CI_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // 需要開啓時，註解下一行。
+        redirect(base_url('portal/'));
+    }
+
     public function index()
     {
         

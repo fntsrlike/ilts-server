@@ -3,8 +3,14 @@
 class Organization extends CI_Controller {
 
     public function __construct() {
+        
         parent::__construct();  
+        
         $this->load->model('organization_model');
+
+        if ( empty($this->session->userdata('uid'))) {
+            redirect(base_url('portal/'));
+        }
 
     }
 

@@ -2,10 +2,11 @@
 
 class Portal extends CI_Controller {
 
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();  
+        
         $this->load->model('portal_model');
-
     }
 
     public function index()
@@ -21,9 +22,7 @@ class Portal extends CI_Controller {
         }
         
         # Just a html Page can go to oauth_process
-        $this->load->view('header');
         $this->load->view('portal/oauth');
-        $this->load->view('footer');
     }
 
     public function oauth_process($provider_type = 'google')
@@ -132,13 +131,16 @@ class Portal extends CI_Controller {
         }
 
         # Page show the user files
+
         $provider = $this->session->userdata('provider');
         $identify_value = $this->session->userdata('identify_value');
         $u_id = $this->session->userdata('uid');
+        $username = $this->portal_model->read_user($u_id)->uName;
 
         $data['id']         = $u_id;
         $data['provider']   = $provider;
         $data['identify']   = $identify_value;
+        $data['username']   = $username;
 
         $this->load->view('header');
         $this->load->view('portal/user_page', $data);

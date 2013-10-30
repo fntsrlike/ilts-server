@@ -1,8 +1,8 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assests/tree.css');?>" />
-
+<h1>Organization 管理面板</h1>
 <div>
-  <h2>Create Organization</h2>
+  <h3>Create</h3>
   <form class="form-inline" role="form" action="<?php echo base_url('organization/put_process');?>" id="createForm">
     <div class="form-group" >
       <label class="sr-only" for="createOrgName">Organization Name</label>
