@@ -8,6 +8,7 @@
     <p>
       <ul>
         <li>uID: <?php echo $id;?></li>
+        <li>UserName: <?php echo $username;?></li>
         <li>Provider: <?php echo $provider;?></li>
         <li>Identify: <?php echo $identify;?></li>
       </ul>

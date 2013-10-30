@@ -130,13 +130,16 @@ class Portal extends CI_Controller {
         }
 
         # Page show the user files
+
         $provider = $this->session->userdata('provider');
         $identify_value = $this->session->userdata('identify_value');
         $u_id = $this->session->userdata('uid');
+        $username = $this->portal_model->read_user($u_id)->uName;
 
         $data['id']         = $u_id;
         $data['provider']   = $provider;
         $data['identify']   = $identify_value;
+        $data['username']   = $username;
 
         $this->load->view('header');
         $this->load->view('portal/user_page', $data);
