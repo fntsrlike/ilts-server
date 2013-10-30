@@ -62,10 +62,16 @@
           </form>
         
       </div>
-      
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="updateBtn">Update</button>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-danger" id="deleteBtn">Delete</button>
+        </div>
+        <div class="col-sm-10">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateBtn">Update</button>
+        </div>  
+        
       </div>
       
     </div><!-- /.modal-content -->

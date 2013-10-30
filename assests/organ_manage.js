@@ -71,3 +71,29 @@
     $('#updateMenu').modal('toggle');
 
   });  
+
+
+  // Attach a submit handler to the form
+  $("#deleteBtn").click(function() {
+   
+    // Get some values from elements on the page:
+    var form  = $( "#updateForm" );
+    var id    = form.find( "input[name='id']" ).val();
+    var url   = "/organization/del_process";
+   
+    var data = {
+        "id"    :id
+      };
+
+    // Send the data using post
+    $.post( 
+      url, 
+      data,
+      function() {
+        $(".tree").load('/organization/tree', function(){$.getScript("/assests/organ_manage.js");});
+      }
+    ); 
+
+    $('#updateMenu').modal('hide');
+
+  });  
