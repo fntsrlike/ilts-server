@@ -1,11 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class About extends CI_Controller {
+class Page extends CI_Controller {
 
     public function index()
     {
         $this->load->view('header');
-        //$this->load->view('organization/tree',$data);
+        $this->load->view('page/main');
+        $this->load->view('footer');
+    }
+
+    public function about()
+    {
+        $this->load->view('header');
+        $this->load->view('page/about');
         $this->load->view('footer');        
     }
 

@@ -1,2 +1,2 @@
-  <h2>Organization Tree</h2>
+  <h3>Tree</h3>
   <?php echo $tree;?>
