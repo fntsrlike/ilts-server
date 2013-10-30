@@ -1,4 +1,4 @@
 </div>  
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="/assests/bootstrap.min.js"></script>
 </body>
 </html>

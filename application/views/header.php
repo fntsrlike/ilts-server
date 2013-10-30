@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>伊爾特系統Demo</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assests/bootstrap.min.css">
 
   <style type="text/css">
     body { 
         padding-top: 70px; 
     }
   </style>
-  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="/assests/jquery.js"></script>
 </head>
 <body>
 
