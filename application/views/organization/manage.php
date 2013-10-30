@@ -20,10 +20,7 @@
   </form>
 </div>
 
-<div class="tree">
-  <h2>Organization Tree</h2>
-  <?php echo $tree;?>
-</div>
+<div class="tree"></div>
 
 <div class="modal fade" id="updateMenu">
   <div class="modal-dialog">
@@ -79,3 +76,6 @@
 </div><!-- /.modal -->
 
 <script src="<?php echo base_url("assests/organ_manage.js");?>"></script>
+<script type="text/javascript">
+  $(".tree").load('/organization/tree', function(){$.getScript("/assests/organ_manage_reload.js");});
+</script>
