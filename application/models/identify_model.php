@@ -12,16 +12,23 @@ class Identify_model extends CI_Model {
         $user_obj_arr = array();
 
         foreach ($result as $row) {
-             $user = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
+            $user = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
 
-             $user->id      = $row->iId;
-             $user->user    = $this->portal_model->read_user($row->uId)->uName  . " ({$row->uId})";
-             $user->org     = $this->organization_model->read_organ($row->oId)->oName . " ({$row->oId})";
-             $user->level   = $row->iLevel;
-             $user->status  = $row->iStatus;
-             $user->created = $row->iCreateTime;
+            if(empty($this->organization_model->read_organ($row->oId))) {
+                $organ = 'Null';
+            }
+            else {
+                $organ = $this->organization_model->read_organ($row->oId)->oName;
+            }
 
-             $user_obj_arr[] = $user;
+            $user->id      = $row->iId;
+            $user->user    = $this->portal_model->read_user($row->uId)->uName  . " ({$row->uId})";
+            $user->org     = $organ . " ({$row->oId})";
+            $user->level   = $row->iLevel;
+            $user->status  = $row->iStatus;
+            $user->created = $row->iCreateTime;
+
+            $user_obj_arr[] = $user;
         }
 
         return $user_obj_arr;        
@@ -38,6 +45,28 @@ class Identify_model extends CI_Model {
         $this->db->insert('identify_tag', $insertArr);
     }
 
+    public function update_identify($iId, $uId, $oId, $level, $status = '0')
+    {
+        $updateArr['uId']       = $uId;
+        $updateArr['oId']       = $oId;
+        $updateArr['iLevel']    = $level;
+        $updateArr['iStatus']   = $status;
+
+        $this->db->where('iId', $iId);
+        $this->db->update('identify_tag', $updateArr);
+    }
+
+    public function delete_identify($iId)
+    {
+        $this->db->where('iId', $iId);
+        $this->db->delete('identify_tag');
+    }
+
+    public function list_organ_identifty($oId)
+    {
+        $this->db->where('oId', $oId);
+        return $result = $this->db->get('identify_tag')->result();
+    }
 }
 
 /* End of file identify_model.php */

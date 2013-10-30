@@ -37,6 +37,12 @@ class Portal_model extends CI_Model {
         return $this->db->get('user_list')->row();
     }
 
+    public function read_user_by_name($name)
+    {
+        $this->db->where('uName = ', $name);
+        return $this->db->get('user_list')->row();
+    }
+
     public function read_user_oauth($uId, $provider)
     {
         $type = $this->provide_to_code($provider);
