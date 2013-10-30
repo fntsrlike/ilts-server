@@ -15,7 +15,7 @@ class Identify_model extends CI_Model {
             $user = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
 
             if(empty($this->organization_model->read_organ($row->oId))) {
-                $organ = '查無此組織';
+                $organ = 'Null';
             }
             else {
                 $organ = $this->organization_model->read_organ($row->oId)->oName;
@@ -45,6 +45,28 @@ class Identify_model extends CI_Model {
         $this->db->insert('identify_tag', $insertArr);
     }
 
+    public function update_identify($iId, $uId, $oId, $level, $status = '0')
+    {
+        $updateArr['uId']       = $uId;
+        $updateArr['oId']       = $oId;
+        $updateArr['iLevel']    = $level;
+        $updateArr['iStatus']   = $status;
+
+        $this->db->where('iId', $iId);
+        $this->db->update('identify_tag', $updateArr);
+    }
+
+    public function delete_identify($iId)
+    {
+        $this->db->where('iId', $iId);
+        $this->db->delete('identify_tag');
+    }
+
+    public function list_organ_identifty($oId)
+    {
+        $this->db->where('oId', $oId);
+        return $result = $this->db->get('identify_tag')->result();
+    }
 }
 
 /* End of file identify_model.php */
