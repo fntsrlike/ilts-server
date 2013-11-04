@@ -17,7 +17,7 @@ class Portal extends CI_Controller {
     public function oauth()
     {
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( !(false == $this->session->userdata('uid'))) {
             redirect(base_url('portal/user_page'));
         }
         
@@ -29,7 +29,7 @@ class Portal extends CI_Controller {
     {
 
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( !(false == $this->session->userdata('uid'))) {
             redirect(base_url('portal/user_page'));
         }
 
@@ -86,12 +86,12 @@ class Portal extends CI_Controller {
     public function register()
     {
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( !(false == $this->session->userdata('uid'))) {
             redirect(base_url('portal/user_page'));
         }
 
         # If login and has registered, redirect to personal page
-        if ( false == $this->session->userdata('provider')) || empty($this->session->userdata('identify_value')) ) {
+        if ( false == $this->session->userdata('provider') || false == $this->session->userdata('identify_value') ) {
             redirect(base_url('portal/oauth'));
         }
         elseif ( ! (false == $this->session->userdata('uid')) ) {
@@ -110,7 +110,7 @@ class Portal extends CI_Controller {
     public function register_process()
     {
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/user_page'));
         }
 
@@ -143,7 +143,7 @@ class Portal extends CI_Controller {
     public function user_page()
     {
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
 
