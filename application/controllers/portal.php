@@ -11,13 +11,14 @@ class Portal extends CI_Controller {
 
     public function index()
     {    
-        $this->oauth();   
+        $this->oauth();
     }
 
     public function oauth()
     {
         # Check Session.
-        if ( !empty($this->session->userdata('uid'))) {
+        $session_status = $this->session->userdata('uid');
+        if ( false == $session_status)) {
             redirect(base_url('portal/user_page'));
         }
         
@@ -27,7 +28,14 @@ class Portal extends CI_Controller {
 
     public function oauth_process($provider_type = 'google')
     {
-        # TODO: Google Provider
+
+        # Check Session.
+        $session_status = $this->session->userdata('uid');
+        if ( false == $session_status)) {
+            redirect(base_url('portal/user_page'));
+        }
+
+        # Google Provider
         $this->load->spark('oauth2/0.4.0');
 
         $provider = $this->oauth2->provider($provider_type, array(
@@ -79,6 +87,12 @@ class Portal extends CI_Controller {
 
     public function register()
     {
+        # Check Session.
+        $session_status = $this->session->userdata('uid');
+        if ( false == $session_status)) {
+            redirect(base_url('portal/user_page'));
+        }
+
         # If login and has registered, redirect to personal page
         if ( empty($this->session->userdata('provider')) || empty($this->session->userdata('identify_value')) ) {
             redirect(base_url('portal/oauth'));
@@ -98,6 +112,12 @@ class Portal extends CI_Controller {
 
     public function register_process()
     {
+        # Check Session.
+        $session_status = $this->session->userdata('uid');
+        if ( false == $session_status)) {
+            redirect(base_url('portal/user_page'));
+        }
+
         $provider = $this->session->userdata('provider');
         $identify_value = $this->session->userdata('identify_value');
 
@@ -126,7 +146,9 @@ class Portal extends CI_Controller {
 
     public function user_page()
     {
-        if ( empty($this->session->userdata('uid'))) {
+        # Check Session.
+        $session_status = $this->session->userdata('uid');
+        if ( false != $session_status)) {
             redirect(base_url('portal/'));
         }
 
