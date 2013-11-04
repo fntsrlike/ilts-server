@@ -78,5 +78,7 @@
 
 <script src="<?php echo base_url("assests/organ_manage.js");?>"></script>
 <script type="text/javascript">
-  $(".tree").load('<?php base_url("/organization/tree");?>', function(){$.getScript("<?php base_url('/assests/organ_manage_reload.js');");});
+  $(".tree").load('<?php echo base_url("/organization/tree");?>', function(){
+    $.getScript("<?php echo base_url('/assests/organ_manage_reload.js');?>");
+  });
 </script>

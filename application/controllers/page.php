@@ -7,7 +7,7 @@ class Page extends CI_Controller {
         parent::__construct();  
 
         # Check Session.
-        if ( false == $this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/user_page'));
         }
     }
