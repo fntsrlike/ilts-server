@@ -8,7 +8,7 @@ class Organization extends CI_Controller {
         
         $this->load->model('organization_model');
 
-        if ( empty($this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid'))) {
             redirect(base_url('portal/'));
         }
 
