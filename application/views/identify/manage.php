@@ -23,10 +23,10 @@
 <div id="table"></div>
 
 <script type="text/javascript">
-  $.getScript("/assests/identify_manage.js");
+  $.getScript("<?php base_url('/assests/identify_manage.js');?>");
   
   $("#table").load(
     '/identify/organ_ident_list/'+$("#createForm").find( "input[name='oId']").val(), 
-    function(){$.getScript("/assests/identify_manage_reload.js");}
+    function(){$.getScript("<?php base_url('/assests/identify_manage_reload.js');?>");}
   );
 </script>

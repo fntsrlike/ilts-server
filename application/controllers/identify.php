@@ -11,7 +11,7 @@ class Identify extends CI_Controller {
         $this->load->model('organization_model');
         $this->load->library('table');
 
-        if ( empty($this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
     }

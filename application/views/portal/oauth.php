@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>伊爾特系統Demo</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery.js"></script>
+  <link rel="stylesheet" href="<?php echo base_url('/assests/bootstrap.min.css');?>">
+  <script src="<?php echo base_url('/assests/jquery.js');?>"></script>
 </head>
 <body>
   <div class="container">
@@ -22,6 +22,6 @@
       </p>
     </div>
   </div>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url('/assests/bootstrap.min.js');?>"></script>
 </body>
 </html>

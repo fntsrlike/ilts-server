@@ -6,7 +6,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         
-        if ( empty($this->session->userdata('uid'))) {
+        if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
     }
