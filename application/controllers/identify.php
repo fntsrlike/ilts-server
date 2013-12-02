@@ -81,6 +81,8 @@ class Identify extends CI_Controller {
         $level  = $this->input->post('level');
 
         $this->identify_model->create_identify($u_id, $o_id, $level);
+
+        redirect('identify/manage/'.$o_id);
     }
 
     public function set_process()

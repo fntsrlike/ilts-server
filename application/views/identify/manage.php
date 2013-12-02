@@ -3,7 +3,7 @@
 
 <div style="margin:40px auto">
   <h3> 新增使用者權限 </h3>    
-  <form id="createForm" class="form-inline" role="form" action="<?php echo base_url('identify/put_process');?>">
+  <form id="createForm" class="form-inline" role="form" method="post" action="<?php echo base_url('identify/put_process');?>">
 
     <div class="form-group" >
       <label class="sr-only" for="createIdentUser">User Name</label>
