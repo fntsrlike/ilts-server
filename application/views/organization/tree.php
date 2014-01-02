@@ -1,2 +1,1 @@
-  <h3>Tree</h3>
-  <?php echo $tree;?>
+<?php echo $tree;?>

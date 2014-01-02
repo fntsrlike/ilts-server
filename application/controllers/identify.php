@@ -5,7 +5,7 @@ class Identify extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->load->model('identify_model');
         $this->load->model('portal_model');
         $this->load->model('organization_model');
@@ -38,7 +38,7 @@ class Identify extends CI_Controller {
 
         $this->load->view('header');
         $this->load->view('identify/list_all', $data);
-        $this->load->view('footer');             
+        $this->load->view('footer');
     }
 
     public function manage($oId)
@@ -48,7 +48,7 @@ class Identify extends CI_Controller {
 
         $this->load->view('header');
         $this->load->view('identify/manage', $data);
-        $this->load->view('footer');             
+        $this->load->view('footer');
     }
 
     public function organ_ident_list($oId)
@@ -76,7 +76,7 @@ class Identify extends CI_Controller {
 
     public function put_process()
     {
-        $u_id   = $this->portal_model->read_user_by_name($this->input->post('username'))->uId;
+        $u_id   = $this->portal_model->read_user_by_name($this->input->post('name'))->uId;
         $o_id   = $this->input->post('oId');
         $level  = $this->input->post('level');
 

@@ -11,6 +11,9 @@
     }
   </style>
   <script src="<?php echo base_url('/assets/jquery.js');?>"></script>
+  <script type="text/javascript">
+    var base_url = "<?php echo base_url();?>";
+  </script>
 </head>
 <body>
 

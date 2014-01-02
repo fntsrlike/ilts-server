@@ -50,7 +50,7 @@ class Organization_model extends CI_Model {
 
         $str = '';
         if ($oId == 0)
-            $str .= "<ul class=\"tree\">";
+            $str .= "<ul id=\"tree\" class=\"tree\">";
         else
             $str .= "<ul>";
 

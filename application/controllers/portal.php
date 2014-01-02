@@ -12,10 +12,6 @@ class Portal extends CI_Controller {
     public function index()
     {
         $this->oauth();
-        var_dump($this->session->userdata('provider'));
-        var_dump($this->session->userdata('uid'));
-        var_dump($this->session->userdata('identify_value'));
-
     }
 
     public function oauth()

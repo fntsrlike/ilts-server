@@ -13,15 +13,16 @@ class Identify_model extends CI_Model {
 
         foreach ($result as $row) {
             $user = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
-
-            if(empty($this->organization_model->read_organ($row->oId))) {
+            $isOrgan = $this->organization_model->read_organ($row->oId);
+            if(empty($isOrgan)) {
                 $organ = 'Null';
             }
             else {
                 $organ = $this->organization_model->read_organ($row->oId)->oName;
             }
 
-            $username = empty($this->portal_model->read_user($row->uId)) ? 'Null' : $this->portal_model->read_user($row->uId)->uName;
+            $isUser = $this->portal_model->read_user($row->uId);
+            $username = empty($isUser) ? 'Null' : $this->portal_model->read_user($row->uId)->uName;
 
             $user->id      = $row->iId;
             $user->user    = $username . " ({$row->uId})";
@@ -33,7 +34,7 @@ class Identify_model extends CI_Model {
             $user_obj_arr[] = $user;
         }
 
-        return $user_obj_arr;        
+        return $user_obj_arr;
 
     }
 

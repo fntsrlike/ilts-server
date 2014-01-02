@@ -2,7 +2,7 @@
 
 
 <div style="margin:40px auto">
-  <h3> 新增使用者權限 </h3>    
+  <h3> 新增使用者權限 </h3>
   <form id="createForm" class="form-inline" role="form" method="post" action="<?php echo base_url('identify/put_process');?>">
 
     <div class="form-group" >
@@ -10,9 +10,9 @@
       <input type="text" name="name" class="form-control" id="createIdentUser" placeholder="User Name"/>
     </div>
     <div class="form-group" >
-      <label class="sr-only" for="createIdentLevel">Identify Level</label>    
+      <label class="sr-only" for="createIdentLevel">Identify Level</label>
       <input type="text" name="level" class="form-control" id="createIdentLevel" placeholder="Identify Level"/>
-    </div>  
+    </div>
 
     <input type="hidden" name="oId" value="<?php echo $oId;?>" />
     <input type="submit" value="Create"  class="btn btn-default">
@@ -23,10 +23,11 @@
 <div id="table"></div>
 
 <script type="text/javascript">
-  $.getScript("<?php base_url('/assests/identify_manage.js');?>");
-  
+
+  $.getScript( base_url + '/assets/identify_manage.js' );
+
   $("#table").load(
-    '/identify/organ_ident_list/'+$("#createForm").find( "input[name='oId']").val(), 
-    function(){$.getScript("<?php base_url('/assests/identify_manage_reload.js');?>");}
+    base_url + 'identify/organ_ident_list/'+$("#createForm").find( "input[name='oId']").val(),
+    function(){$.getScript(base_url + '/assets/identify_manage_reload.js')}
   );
 </script>
