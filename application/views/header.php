@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>伊爾特系統Demo</title>
-  <link rel="stylesheet" href="<?php echo base_url('/assests/bootstrap.min.css');?>">
+  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap.min.css');?>">
 
   <style type="text/css">
-    body { 
-        padding-top: 70px; 
+    body {
+        padding-top: 70px;
     }
   </style>
-  <script src="<?php echo base_url('/assests/jquery.js');?>"></script>
+  <script src="<?php echo base_url('/assets/jquery.js');?>"></script>
 </head>
 <body>
 
@@ -36,7 +36,7 @@
         <li><a href="<?php echo base_url('organization')?>">Organizations</a></li>
         <li><a href="<?php echo base_url('identify')?>">Identifies</a></li>
       </ul>
-      
+
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo base_url('portal/user_page')?>">User Page</a></li>
@@ -44,6 +44,6 @@
       </ul>
     </nav><!-- /.navbar-collapse -->
   </div>
-</header>    
+</header>
 
 <div class="container">

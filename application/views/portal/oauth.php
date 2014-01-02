@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>伊爾特系統Demo</title>
-  <link rel="stylesheet" href="<?php echo base_url('/assests/bootstrap.min.css');?>">
-  <script src="<?php echo base_url('/assests/jquery.js');?>"></script>
+  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap.min.css');?>">
+  <script src="<?php echo base_url('/assets/jquery.js');?>"></script>
 </head>
 <body>
   <div class="container">

@@ -2,16 +2,20 @@
 
 class Portal extends CI_Controller {
 
-    public function __construct() 
+    public function __construct()
     {
-        parent::__construct();  
-        
+        parent::__construct();
+
         $this->load->model('portal_model');
     }
 
     public function index()
-    {    
+    {
         $this->oauth();
+        var_dump($this->session->userdata('provider'));
+        var_dump($this->session->userdata('uid'));
+        var_dump($this->session->userdata('identify_value'));
+
     }
 
     public function oauth()
@@ -20,7 +24,7 @@ class Portal extends CI_Controller {
         if ( !(false == $this->session->userdata('uid'))) {
             redirect(base_url('portal/user_page'));
         }
-        
+
         # Just a html Page can go to oauth_process
         $this->load->view('portal/oauth');
     }
@@ -50,15 +54,15 @@ class Portal extends CI_Controller {
         {
             try
             {
-        
+
                 $token = $provider->access($_GET['code']);
                 $user = $provider->get_user_info($token);
-                
+
                 $user_oauth = $this->portal_model->read_user_oauth_by_provider($provider_type, $user['email']);
-                
+
                 $session_data['provider']       = 'Google';
                 $session_data['identify_value'] = $user['email'];
-                
+
                 if ( empty($user_oauth) ) {
                     $this->session->set_userdata($session_data);
 
@@ -71,7 +75,7 @@ class Portal extends CI_Controller {
                     redirect(base_url('portal/user_page'));
                 }
 
-                
+
             }
 
             catch (OAuth2_Exception $e)
@@ -79,7 +83,7 @@ class Portal extends CI_Controller {
                 show_error('OAuth2 didnt work: '.$e);
             }
 
-        }   
+        }
 
     }
 
@@ -110,7 +114,7 @@ class Portal extends CI_Controller {
     public function register_process()
     {
         # Check Session.
-        if ( false == $this->session->userdata('uid')) {
+        if ( true == $this->session->userdata('uid')) {
             redirect(base_url('portal/user_page'));
         }
 
@@ -127,7 +131,7 @@ class Portal extends CI_Controller {
         }
 
         # Create Files into DB, and redirect to personal.
-        $name = $this->input->post('username');        
+        $name = $this->input->post('username');
         $this->portal_model->create_user($name, 0);
 
         $uid = $this->db->insert_id();
@@ -135,7 +139,7 @@ class Portal extends CI_Controller {
         $this->portal_model->create_user_oauth($uid, $provider, $identify_value);
 
         $session_data['uid'] = $uid;
-        $this->session->set_userdata($session_data);        
+        $this->session->set_userdata($session_data);
 
         redirect(base_url('portal'));
     }

@@ -1,4 +1,4 @@
-</div>  
-  <script src="<?php echo base_url('/assests/bootstrap.min.js');?>"></script>
+</div>
+  <script src="<?php echo base_url('/assets/bootstrap.min.js');?>"></script>
 </body>
 </html>
