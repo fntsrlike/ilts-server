@@ -3,10 +3,11 @@
 class Organization extends CI_Controller {
 
     public function __construct() {
-        
-        parent::__construct();  
-        
+
+        parent::__construct();
+
         $this->load->model('organization_model');
+        $this->load->library('form_validation');
 
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
@@ -42,21 +43,41 @@ class Organization extends CI_Controller {
 
     public function put_process()
     {
-        $name   = $this->input->post('name');
-        $parent = $this->input->post('parent');
-        $sort   = $this->input->post('sort');
+        $arr = array();
+        $arr['status']  = 'null';
 
-        $this->organization_model->create_organ($name, $parent, $sort, '0');
+        if ($this->form_validation->run('organ_put') == false) {
+            $arr['status']  = 'failed';
+            $arr['err_msg'] = validation_errors();;
+        }
+        else {
+            $name   = $this->input->post('name');
+            $parent = $this->input->post('parent');
+            $sort   = $this->input->post('sort');
+
+            $this->organization_model->create_organ($name, $parent, $sort, '0');
+
+            $arr['status']  = 'success';
+        }
+
+        exit(json_encode($arr));
     }
 
     public function set_process()
     {
-        $id     = $this->input->post('id');
-        $name   = $this->input->post('name');
-        $parent = $this->input->post('parent');
-        $sort   = $this->input->post('sort');
+        if ($this->form_validation->run('set') == FALSE) {
+            $id     = $this->input->post('id');
+            $name   = $this->input->post('name');
+            $parent = $this->input->post('parent');
+            $sort   = $this->input->post('sort');
 
-        $this->organization_model->update_organ($id, $name, $parent, $sort, '0');        
+            $this->organization_model->update_organ($id, $name, $parent, $sort, '0');
+
+            exit('true');
+        }
+        else {
+            exit('false');
+        }
     }
 
     public function del_process()

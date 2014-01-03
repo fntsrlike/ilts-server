@@ -22,13 +22,37 @@
     $.post(
       url,
       data,
-      function() {
-        $(".tree").load(base_url + 'organization/tree', function(){
-          $.getScript(base_url + "assets/organ_manage_reload.js");
-        });
-      }
-    );
+      function(data) {
+
+        if (data.status == "success") {
+          // Code..
+        }
+        else if (data.status == "failed") {
+          // Code..
+          console.log(data.err_msg);
+        }
+        else {
+          // Code..
+          console.log("Pass but Error");
+        }
+
+      },
+      "json"
+    )
+    .done(function() {
+      // Refresh
+      $(".tree").load(base_url + 'organization/tree', function(){
+        $.getScript(base_url + "assets/organ_manage_reload.js");
+      });
+
+      console.log("Done.");
+    })
+    .fail(function() {
+      // Code..
+      console.log("Connect Failed");
+    });
   });
+
 
   // Attach a submit handler to the form
   $("#updateBtn").click(function() {
