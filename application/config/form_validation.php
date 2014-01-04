@@ -23,4 +23,20 @@ $config['organ_put']  = array(
 
 $config['organ_set']  = $config['organ_put'];
 
-
+$config['identify_put']  = array(
+    array(
+        'field' => 'name',
+        'label' => '使用者名稱',
+        'rules' => "required"
+    ),
+    array(
+        'field' => 'level',
+        'label' => '權限級別號碼',
+        'rules' => 'required|is_natural'
+    ),
+    array(
+        'field' => 'oId',
+        'label' => '組織代碼',
+        'rules' => 'required|is_natural'
+    ),
+);

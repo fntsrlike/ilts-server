@@ -14,6 +14,44 @@ class Portal extends CI_Controller {
         $this->oauth();
     }
 
+    public function api()
+    {
+        $arr = array();
+        $arr['status'] = 'failed';
+
+        # Check Session.
+        if ( !(false == $this->session->userdata('uid'))) {
+            $arr['status'] = 'true';
+        }
+        else {
+            $arr['status'] = 'false';
+        }
+
+        echo json_encode($arr);
+    }
+
+    public function api_load()
+    {
+        $url = base_url('portal/api');
+
+        // $result = file_get_contents($url);
+        // var_dump(json_decode($result, true));
+
+        //  Initiate curl
+        $ch = curl_init();
+        // Disable SSL verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // Will return the response, if false it print the response
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // Set the url
+        curl_setopt($ch, CURLOPT_URL,$url);
+        // Execute
+        $result=curl_exec($ch);
+
+        // Will dump a beauty json :3
+        var_dump(json_decode($result, true));
+    }
+
     public function oauth()
     {
         # Check Session.

@@ -10,6 +10,7 @@ class Identify extends CI_Controller {
         $this->load->model('portal_model');
         $this->load->model('organization_model');
         $this->load->library('table');
+        $this->load->library('form_validation');
 
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
@@ -76,13 +77,29 @@ class Identify extends CI_Controller {
 
     public function put_process()
     {
-        $u_id   = $this->portal_model->read_user_by_name($this->input->post('name'))->uId;
-        $o_id   = $this->input->post('oId');
-        $level  = $this->input->post('level');
+        $arr = array();
+        $arr['status']  = 'null';
 
-        $this->identify_model->create_identify($u_id, $o_id, $level);
+        if ($this->form_validation->run('identify_put') == false) {
+            $arr['status']  = 'failed';
+            $arr['err_msg'] = validation_errors();;
+        }
+        else {
+            $u_id   = $this->portal_model->read_user_by_name($this->input->post('name'))->uId;
+            $o_id   = $this->input->post('oId');
+            $level  = $this->input->post('level');
 
-        redirect('identify/manage/'.$o_id);
+            if ($u_id == null) {
+                $arr['status']  = 'failed';
+            }
+            else {
+                $this->identify_model->create_identify($u_id, $o_id, $level);
+                $arr['status']  = 'success';
+            }
+        }
+
+        exit(json_encode($arr));
+
     }
 
     public function set_process()

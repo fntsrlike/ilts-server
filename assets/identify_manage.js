@@ -16,17 +16,42 @@ $("#createForm").submit(function( event ) {
       "level": level,
     };
 
-  // Send the data using post
   $.post(
     url,
     data,
-    function() {
-      $("#table").load(
-        base_url + 'identify/organ_ident_list/'+ $("#createForm").find( "input[name='oId']").val(),
-        function(){
-          $.getScript( base_url + 'assets/identify_manage_reload.js');
-        }
-      );
-    };
-  );
+    function(data) {
+
+      if (data.status == "success") {
+        // Code..
+      }
+      else if (data.status == "failed") {
+        // Code..
+        console.log('failed');
+        console.log(data.err_msg);
+      }
+      else {
+        // Code..
+        console.log("Pass but Error");
+      }
+
+    },
+    "json"
+  )
+  .done(function() {
+    // Refresh
+    $("#table").load(
+      base_url + 'identify/organ_ident_list/'+ $("#createForm").find( "input[name='oId']").val(),
+      function(){
+        $.getScript( base_url + 'assets/identify_manage_reload.js');
+      }
+    );
+    console.log("Done.");
+  })
+  .fail(function() {
+    // Code..
+    console.log(url);
+    console.log("Connect Failed");
+  });
+
+
 });

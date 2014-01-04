@@ -36,6 +36,20 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
+/*
+|--------------------------------------------------------------------------
+| DB
+|--------------------------------------------------------------------------
+|
+| Database
+|
+*/
+
+define('DB_IDENTITY',       'Identify_tag');
+define('DB_ORGAN_TREE',     'organ_tree');
+define('DB_USER_LIST',      'user_list');
+define('DB_OAUTH',          'user_oauth');
+define('DB_USER_STUDENT',   'user_student');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
