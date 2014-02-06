@@ -24,10 +24,5 @@
 
 <script type="text/javascript">
 
-  $.getScript( base_url + '/assets/identify_manage.js' );
-
-  $("#table").load(
-    base_url + 'identify/organ_ident_list/'+$("#createForm").find( "input[name='oId']").val(),
-    function(){$.getScript(base_url + '/assets/identify_manage_reload.js')}
-  );
+  $.getScript( base_url + '/assets/identify_manage.js');
 </script>
