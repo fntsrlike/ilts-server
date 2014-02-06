@@ -86,7 +86,7 @@
   $("#tree_div").load(
     base_url + 'organization/tree',
     function(){
-      $.getScript(base_url + 'assets/organ_manage_reload.js');
+      organ.listener_reuse();
     }
     );
 

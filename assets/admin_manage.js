@@ -3,23 +3,23 @@ $(function(){
   admin = {};
 
   admin.run = function () {
-    admin.load_list();
-    admin.initial_listener();
+    admin.list_loading();
+    admin.listener_disposable();
   };
 
-  admin.load_list = function() {
+  admin.list_loading = function() {
     var url = $('#loadList').attr('action');
     var data = {};
 
     $.post(url, data, function(data) {
-        admin.make_list_table(data.msg);
-        admin.reload_listener();
+        admin.list_table_maker(data.msg);
+        admin.listener_reuse();
       },
       "json"
     );
   };
 
-  admin.make_list_table = function(data) {
+  admin.list_table_maker = function(data) {
     var trs = '';
     var tr = '';
     var admin = '';
@@ -38,7 +38,7 @@ $(function(){
     $('#listTable tbody').html(trs);
   };
 
-  admin.initial_listener = function () {
+  admin.listener_disposable = function () {
     $("#createForm").submit(function( event ) {
 
         // Stop form from submitting normally
@@ -78,8 +78,7 @@ $(function(){
       });
   }
 
-  admin.reload_listener = function () {
-
+  admin.listener_reuse = function () {
       $('.delete_btn').click(function(){
         if (!confirm("您確定要刪除此欄位嗎？")) {
                 return false;
@@ -99,8 +98,6 @@ $(function(){
           }
         );
       });
-
-
   };
 
   admin.run();
