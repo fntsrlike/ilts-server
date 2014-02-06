@@ -1,7 +1,24 @@
 <div class="page-header">
-  <h2>關於伊爾特系統</h2>
+  <h1>伊爾特系統 <small>一個正在嘗試並投入實作的會員系統核心</small></h1>
 </div>
 
+
+<h2>作者</h2>
+
+<ul>
+  <li>Github Repo：<a href="https://github.com/fntsrlike/ilt_system_with_codeigniter">https://github.com/fntsrlike/ilt_system_with_codeigniter</a></li>
+  <li>Develper：凌若虛（fntsrlike）</li>
+  <li>Email：fntsrlike+ilts@gmail.com</li>
+  <li>Pages
+    <ul>
+      <li>AboutMe: <a href="http://about.me/f ntsrlike">http://about.me/fntsrlike</a></li>
+      <li>Github: <a href="http://fntsrlike.github.io/">http://fntsrlike.github.io/</a></li>
+      <li>Twitter: <a href="https://twitter.com/fntsrlike">https://twitter.com/fntsrlike</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>系統</h2>
 <h3>起源與展望</h3>
 <p>
   伊爾特系統是Ilt System的音譯，Ilt是<strong>I</strong>dentify Tag, user <strong>L</strong>ist, organization <strong>T</strong>ree的縮寫。本系統概念出自於大學學生會網站的會員系統的設計，當初想擴充當時的會員系統的規模，從只有幹部可以申請，擴增到全校同學，並可以有一個完整的權限控制，且針對學校組織變動性高，以及很多時候職位任期只有一年的高流動性，不斷思考該如何編寫一個會員系統取代原本前人用Dreamwear所做的陽春系統，在學習、經驗以及不斷的思考下，伊爾系統終於逐漸成型概念，但是礙于技術一直無法完整實作出一個漂亮的實例，於是在不斷地建了再砍，砍了又建，前前後後重新為這系統重做了五次核心，直到最近自身技術趨於成熟，便藉由推甄需要一份代表作品的機會，最後重置一次本系統，並且有一個可運作的基本雛形，用此作為這兩年在網站程式開發的經驗凝結，並預計將此雛形進行開源，並應用在學生會網站，努力營運並持續修正、改進，甚至導入未來可能就讀研究所所學知識，期許有一天這個系統可以成為人們想要架網站時，一種會員系統核心的選擇。
@@ -15,69 +32,11 @@
   在資料庫結構上面，User類型的資料表是採用列表的形式，單純記錄一筆一筆的使用者資料，並透過uId去聯結其他屬性，例如本實例中另外增設了有關oauth2資料的儲存。而Organization類型的資料表示採用樹狀資料結構，讓每一個組織節點去記錄其父節點，形成怡個累金字塔型的結構，並透過一些模型，讓我們可以就由此資料結構對組織進行分類，例如各社團的父節點都是名為「社團」的節點，這樣我只要查詢誰的父節點是社團，就可以得到所有社團清單。最後的Identify則是為了聯結前兩者並設有權限所設置，他比較像是Tag（標籤），一種由「一對多(User to Identify)」、「多對一（Identify to Organization）」的聯結，在上面我們記錄著前兩類的Primary Key，讓我們知道哪個使用者是屬於（被標記）為哪個組織的成員，並有欄位設置該使用者在該組織所屬層級，形成一個可延伸成權限系統的資料結構。
 </p>
 
-<h3>資料庫結構</h3>
-<ul>
-  <li>
-    user_list
-    <pre>
-      CREATE TABLE `user_list` (
-        `uId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `uName` varchar(32) NOT NULL DEFAULT '',
-        `uStatus` int(11) NOT NULL DEFAULT '0',
-        `uCreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (`uId`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;      
-    </pre>
-  </li>
-  <li>
-    user_oauth
-    <pre>
-      CREATE TABLE `user_oauth` (
-        `uOAuthId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `uId` int(11) NOT NULL,
-        `uOAuthType` int(11) NOT NULL,
-        `uOAuthValue` varchar(128) NOT NULL DEFAULT '',
-        `uOAuthCreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (`uOAuthId`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;      
-    </pre>
-  </li>
-  <li>
-    organ_tree
-    <pre>
-      CREATE TABLE `organ_tree` (
-        `oId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `oName` varchar(32) NOT NULL DEFAULT '',
-        `oParentId` int(11) NOT NULL,
-        `oSortNumber` int(11) NOT NULL DEFAULT '0',
-        `oStatus` int(11) NOT NULL DEFAULT '0',
-        `oCreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (`oId`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;      
-    </pre>
-  </li>
-  <li>
-    identify_tag
-    <pre>
-      CREATE TABLE `identify_tag` (
-        `iId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `uId` int(11) NOT NULL,
-        `oId` int(11) NOT NULL,
-        `iLevel` int(11) NOT NULL DEFAULT '0',
-        `iStatus` int(11) NOT NULL DEFAULT '0',
-        `iCreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (`iId`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8;      
-    </pre>
-  </li>
-</ul>
-<p>
-</p>
 
-<div class="page-header">
-  <h2>開發一個組織生態系的系統──以學校為例 <small>PHPConf2013徵稿錄取文章</small></h2>
-</div>
 
+
+<h2>文章</h2>
+<h3>開發一個組織生態系的系統──以學校為例 <small>PHPConf2013徵稿錄取文章</small></h3>
 <div>
 <ul>
   <li>主題：開發一個組織生態系的系統──以學校為例</li>
@@ -111,6 +70,6 @@
       <p>
         筆者利用上述概念建構出學生會的官方網站，並提供學權申訴、海報欄位系統等服務，未來會陸續編寫學生相關服務能夠電子化，成為一個個網路應用程式，並將許多需要紙本記錄容易混亂的資料，轉變透過資料庫幫你存取，方便搜尋及確認。最後將三大方向並行推進，提供學校學生一個良好的服務電子化環境。希望此開發經驗能帶給其他想用PHP開發組織網站的人一些幫助。
     </div>
-  </li>  
+  </li>
     </ul>
 </div>

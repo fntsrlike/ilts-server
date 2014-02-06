@@ -2,9 +2,9 @@
 
 class Page extends CI_Controller {
 
-    public function __construct() 
+    public function __construct()
     {
-        parent::__construct();  
+        parent::__construct();
 
         # Check Session.
         if ( false == $this->session->userdata('uid')) {
@@ -14,16 +14,14 @@ class Page extends CI_Controller {
 
     public function index()
     {
-        $this->load->view('header');
-        $this->load->view('page/main');
-        $this->load->view('footer');
+        $this->about();
     }
 
     public function about()
     {
         $this->load->view('header');
         $this->load->view('page/about');
-        $this->load->view('footer');        
+        $this->load->view('footer');
     }
 
 }
