@@ -25,8 +25,9 @@ class Identify_model extends CI_Model {
             $username = empty($isUser) ? 'Null' : $this->user_model->read_user($row->uId)->uName;
 
             $user->id      = $row->iId;
-            $user->user    = $username . " ({$row->uId})";
-            $user->org     = $organ . " ({$row->oId})";
+            $user->user    = '<a href="' . base_url("user/user_info/{$username}") . '">' . $username . " ({$row->uId})" . "</a>";
+            $user->org     = '<a href="' . base_url("identify/manage/{$row->oId}") . '">' . $organ . " ({$row->oId})" . '</a>';
+
             $user->level   = $row->iLevel;
             $user->status  = $row->iStatus;
             $user->created = $row->iCreateTime;

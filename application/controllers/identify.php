@@ -63,7 +63,7 @@ class Identify extends CI_Controller {
 
         foreach ($group as $row) {
             $u_id = $this->user_model->read_user($row->uId);
-            $u_id = empty($u_id) ? 'Null' : '<a href="' . base_url("user/user_info/{$u_id->uName}") . '">' . $u_id->uName . " ({$row->uId})</a>";;;
+            $u_id = empty($u_id) ? 'Null' : '<a href="' . base_url("user/user_info/{$u_id->uName}") . '">' . $u_id->uName . " ({$row->uId})</a>";
 
             $i_id = $row->iId;
 

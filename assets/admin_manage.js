@@ -28,7 +28,7 @@ $(function(){
         admin = data[key];
         tr = '<tr>';
         tr += '<td>' + admin['id'] + '</td>';
-        tr += '<td>' + admin.username + '</td>';
+        tr += '<td> <a href="user/user_info/' + admin.username + '">' + admin.username + '</a></td>';
         tr += '<td>' + admin.comment + '</td>';
         tr += '<td><a class="delete_btn" for="' + admin['id'] + '" href="#">刪除</a></td>';
         tr += '</tr>';
