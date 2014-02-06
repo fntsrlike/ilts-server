@@ -38,6 +38,26 @@ class User_model extends CI_Model {
         return $this->db->get('user_list')->row();
     }
 
+    public function read_user_list()
+    {
+        $this->db->order_by('uId','asc');
+        $result = $this->db->get('user_list')->result();
+        $users = array();
+
+        foreach ($result as $row) {
+
+             $user['id']      = $row->uId;
+             $user['name']    = $row->uName;
+             $user['status']  = ($row->uStatus == 0) ? '正常' : '異常';
+             $user['created'] = $row->uCreateTime;
+             $user['providers']= $this->get_provider($row->uId);
+
+             $users[] = $user;
+        }
+
+        return $users;
+    }
+
     public function read_user_by_name($name)
     {
         $this->db->where('uName = ', $name);
