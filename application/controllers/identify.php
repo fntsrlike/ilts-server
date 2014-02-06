@@ -7,7 +7,7 @@ class Identify extends CI_Controller {
         parent::__construct();
 
         $this->load->model('identify_model');
-        $this->load->model('portal_model');
+        $this->load->model('user_model');
         $this->load->model('organization_model');
         $this->load->library('table');
         $this->load->library('form_validation');
@@ -62,11 +62,11 @@ class Identify extends CI_Controller {
         $this->table->set_heading('Identify id', 'User', 'Level', 'Created Time', 'Operator');
 
         foreach ($group as $row) {
-            $u_id = $this->portal_model->read_user($row->uId);
-            $u_id = empty($u_id) ? 'Null' : $u_id->uName;
+            $u_id = $this->user_model->read_user($row->uId);
+            $u_id = empty($u_id) ? 'Null' : '<a href="' . base_url("user/user_info/{$u_id->uName}") . '">' . $u_id->uName . " ({$row->uId})</a>";;;
 
             $i_id = $row->iId;
-            $u_id = $u_id . " ({$row->uId})";
+
 
             $operator = '<button type="button" iid="'. $i_id .'"class="btn btn-danger identRemove">Delete</button>';
             $table[] = array($i_id, $u_id, $row->iLevel, $row->iCreateTime, $operator);
@@ -85,7 +85,7 @@ class Identify extends CI_Controller {
             $arr['err_msg'] = validation_errors();;
         }
         else {
-            $u_id   = $this->portal_model->read_user_by_name($this->input->post('name'))->uId;
+            $u_id   = $this->user_model->read_user_by_name($this->input->post('name'))->uId;
             $o_id   = $this->input->post('oId');
             $level  = $this->input->post('level');
 

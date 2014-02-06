@@ -6,7 +6,8 @@ class Portal extends CI_Controller {
     {
         parent::__construct();
 
-        $this->load->model('portal_model');
+        $this->load->model('user_model');
+        $this->load->model('admin_model');
     }
 
     public function index()
@@ -92,7 +93,7 @@ class Portal extends CI_Controller {
                 $token = $provider->access($_GET['code']);
                 $user = $provider->get_user_info($token);
 
-                $user_oauth = $this->portal_model->read_user_oauth_by_provider($provider_type, $user['email']);
+                $user_oauth = $this->user_model->read_user_oauth_by_provider($provider_type, $user['email']);
 
                 $session_data['provider']       = 'Google';
                 $session_data['identify_value'] = $user['email'];
@@ -104,6 +105,11 @@ class Portal extends CI_Controller {
                 }
                 else {
                     $session_data['uid'] = $user_oauth->uId;
+
+                    $admin = $this->admin_model->read($user_oauth->uId);
+                    $admin_exist = !empty($admin);
+                    $session_data['level'] = $admin_exist ? 'admin' : 'normal';
+
                     $this->session->set_userdata($session_data);
 
                     redirect(base_url('portal/user_page'));
@@ -160,17 +166,17 @@ class Portal extends CI_Controller {
             exit('The process must be something wrong!');
         }
 
-        if ($this->portal_model->read_user_oauth_by_provider($provider, $identify_value)) {
+        if ($this->user_model->read_user_oauth_by_provider($provider, $identify_value)) {
             exit('You have use this provider to register before!');
         }
 
         # Create Files into DB, and redirect to personal.
         $name = $this->input->post('username');
-        $this->portal_model->create_user($name, 0);
+        $this->user_model->create_user($name, 0);
 
         $uid = $this->db->insert_id();
 
-        $this->portal_model->create_user_oauth($uid, $provider, $identify_value);
+        $this->user_model->create_user_oauth($uid, $provider, $identify_value);
 
         $session_data['uid'] = $uid;
         $this->session->set_userdata($session_data);
@@ -190,12 +196,14 @@ class Portal extends CI_Controller {
         $provider = $this->session->userdata('provider');
         $identify_value = $this->session->userdata('identify_value');
         $u_id = $this->session->userdata('uid');
-        $username = $this->portal_model->read_user($u_id)->uName;
+        $username = $this->user_model->read_user($u_id)->uName;
+        $level = $this->session->userdata('level');
 
         $data['id']         = $u_id;
         $data['provider']   = $provider;
         $data['identify']   = $identify_value;
         $data['username']   = $username;
+        $data['level']      = $level;
 
         $this->load->view('header');
         $this->load->view('portal/user_page', $data);

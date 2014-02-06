@@ -11,6 +11,7 @@
         <li>UserName: <?php echo $username;?></li>
         <li>Provider: <?php echo $provider;?></li>
         <li>Identify: <?php echo $identify;?></li>
+        <li>Level: <?php echo $level;?></li>
       </ul>
     </p>
   </div>

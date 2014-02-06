@@ -4,7 +4,7 @@ class Identify_model extends CI_Model {
 
     public function list_all()
     {
-        $this->load->model('portal_model');
+        $this->load->model('user_model');
         $this->load->model('organization_model');
 
         $this->db->order_by('iId','asc');
@@ -21,8 +21,8 @@ class Identify_model extends CI_Model {
                 $organ = $this->organization_model->read_organ($row->oId)->oName;
             }
 
-            $isUser = $this->portal_model->read_user($row->uId);
-            $username = empty($isUser) ? 'Null' : $this->portal_model->read_user($row->uId)->uName;
+            $isUser = $this->user_model->read_user($row->uId);
+            $username = empty($isUser) ? 'Null' : $this->user_model->read_user($row->uId)->uName;
 
             $user->id      = $row->iId;
             $user->user    = $username . " ({$row->uId})";
@@ -46,6 +46,17 @@ class Identify_model extends CI_Model {
         $insertArr['iStatus']   = $status;
 
         $this->db->insert('identify_tag', $insertArr);
+    }
+
+    public function read_identify_by_uId($uId)
+    {
+
+        $this->db->order_by('iId','asc');
+        $this->db->where('uId = ', $uId);
+        $result = $this->db->get('identify_tag')->result();
+
+        return $result;
+
     }
 
     public function update_identify($iId, $uId, $oId, $level, $status = '0')

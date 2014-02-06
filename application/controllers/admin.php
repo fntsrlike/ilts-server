@@ -6,7 +6,7 @@ class Admin extends CI_Controller {
 
         parent::__construct();
         $this->load->model('admin_model');
-        $this->load->model('portal_model');
+        $this->load->model('user_model');
 
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
@@ -41,7 +41,7 @@ class Admin extends CI_Controller {
             $$msg   = "您輸入的資料不完整。";
         }
         else {
-            $user = $this->portal_model->read_user_by_name($username);
+            $user = $this->user_model->read_user_by_name($username);
             $user_exist = !empty($user);
 
             if (!$user_exist) {
@@ -103,7 +103,7 @@ class Admin extends CI_Controller {
         foreach ($list_arr as $key => $row) {
 
             $id = $row->uId;
-            $username = $this->portal_model->read_user($row->uId)->uName;
+            $username = $this->user_model->read_user($row->uId)->uName;
             $comment  = $row->adminComment;
 
             $admim[] = array('id' => $id, 'username' => $username, 'comment' => $comment);
