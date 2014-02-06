@@ -81,23 +81,3 @@
 </div><!-- /.modal -->
 
 <script src="<?php echo base_url("assets/organ_manage.js");?>"></script>
-<script type="text/javascript">
-  // 讀取組織清單
-  $("#tree_div").load(
-    base_url + 'organization/tree',
-    function(){
-      organ.listener_reuse();
-    }
-    );
-
-  // 樹狀/清單切換功能
-  $("#tree_toogle").click(function() {
-    if ($('#tree').attr('class') == 'tree') {
-      $('#tree').attr('class', '');
-    }
-    else {
-      $('#tree').attr('class', 'tree');
-    }
-
-  });
-</script>

@@ -22,7 +22,4 @@
 <h3> 現有權限清單 </h3>
 <div id="table"></div>
 
-<script type="text/javascript">
-
-  $.getScript( base_url + '/assets/identify_manage.js');
-</script>
+<script src="<?php echo base_url("assets/identify_manage.js");?>"></script>

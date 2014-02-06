@@ -3,11 +3,27 @@ $(function(){
   organ = {};
 
   organ.run = function() {
+    organ.list_loader();
     organ.listener_disposable();
-    organ.listener_reuse();
+  };
+
+  organ.list_loader = function(){
+    var url =  base_url + 'organization/tree';
+    $("#tree_div").load(url, function(){ organ.listener_reuse();});
   };
 
   organ.listener_disposable = function() {
+
+    // 樹狀/清單切換功能
+    $("#tree_toogle").click(function() {
+      if ($('#tree').attr('class') == 'tree') {
+        $('#tree').attr('class', '');
+      }
+      else {
+        $('#tree').attr('class', 'tree');
+      }
+
+    });
 
     // Attach a submit handler to the form
     $("#createForm").submit(function( event ) {

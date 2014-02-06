@@ -3,11 +3,11 @@ $(function(){
   admin = {};
 
   admin.run = function () {
-    admin.list_loading();
+    admin.list_loader();
     admin.listener_disposable();
   };
 
-  admin.list_loading = function() {
+  admin.list_loader = function() {
     var url = $('#loadList').attr('action');
     var data = {};
 
