@@ -38,8 +38,8 @@
         <li><a href="<?php echo base_url('user')?>">Users</a></li>
         <li><a href="<?php echo base_url('organization')?>">Organizations</a></li>
         <li><a href="<?php echo base_url('identify')?>">Identifies</a></li>
+        <li><a href="<?php echo base_url('admin')?>">Admin</a></li>
       </ul>
-
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo base_url('portal/user_page')?>">User Page</a></li>

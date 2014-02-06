@@ -9,7 +9,7 @@ class Portal_model extends CI_Model {
         $insert['uStatus'] = $status;
 
         $this->db->insert('user_list', $insert);
-    }   
+    }
 
     public function create_user_oauth($uid, $provider, $identify_value)
     {
@@ -17,7 +17,7 @@ class Portal_model extends CI_Model {
             case 'google':
                 $type = 1;
                 break;
-            
+
             default:
                 $type = 0;
                 break;
@@ -29,7 +29,7 @@ class Portal_model extends CI_Model {
         $insert['uOAuthValue'] = $identify_value;
 
         $this->db->insert('user_oauth', $insert);
-    } 
+    }
 
     public function read_user($uId)
     {
@@ -67,14 +67,14 @@ class Portal_model extends CI_Model {
             case 'google':
                 $type = 1;
                 break;
-            
+
             default:
                 $type = 0;
                 break;
         }
 
         return $type;
-    }    
+    }
 
 }
 
