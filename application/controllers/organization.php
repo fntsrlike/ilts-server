@@ -6,12 +6,15 @@ class Organization extends CI_Controller {
 
         parent::__construct();
 
-        $this->load->model('organization_model');
-        $this->load->library('form_validation');
-
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
+        else if ( 'admin' != $this->session->userdata('level')){
+            redirect(base_url('page/no_permission'));
+        }
+
+        $this->load->model('organization_model');
+        $this->load->library('form_validation');
 
     }
 

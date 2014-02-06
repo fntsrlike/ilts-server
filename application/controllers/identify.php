@@ -6,15 +6,18 @@ class Identify extends CI_Controller {
     {
         parent::__construct();
 
+        if ( false == $this->session->userdata('uid')) {
+            redirect(base_url('portal/'));
+        }
+        else if ( 'admin' != $this->session->userdata('level')){
+            redirect(base_url('page/no_permission'));
+        }
+
         $this->load->model('identify_model');
         $this->load->model('user_model');
         $this->load->model('organization_model');
         $this->load->library('table');
         $this->load->library('form_validation');
-
-        if ( false == $this->session->userdata('uid')) {
-            redirect(base_url('portal/'));
-        }
     }
 
     public function index()

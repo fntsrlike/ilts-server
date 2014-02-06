@@ -5,12 +5,17 @@ class Admin extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-        $this->load->model('admin_model');
-        $this->load->model('user_model');
 
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
+        else if ( 'admin' != $this->session->userdata('level')){
+            redirect(base_url('page/no_permission'));
+        }
+
+        $this->load->model('admin_model');
+        $this->load->model('user_model');
+
 
     }
 

@@ -6,10 +6,6 @@ class Page extends CI_Controller {
     {
         parent::__construct();
 
-        # Check Session.
-        if ( false == $this->session->userdata('uid')) {
-            redirect(base_url('portal/user_page'));
-        }
     }
 
     public function index()
@@ -21,6 +17,12 @@ class Page extends CI_Controller {
     {
         $this->load->view('header');
         $this->load->view('page/about');
+        $this->load->view('footer');
+    }
+
+    public function no_permission(){
+        $this->load->view('header');
+        $this->load->view('page/no_permission');
         $this->load->view('footer');
     }
 

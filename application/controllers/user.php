@@ -9,6 +9,9 @@ class User extends CI_Controller {
         if ( false == $this->session->userdata('uid')) {
             redirect(base_url('portal/'));
         }
+        else if ( 'admin' != $this->session->userdata('level')){
+            redirect(base_url('page/no_permission'));
+        }
 
         $this->load->model('identify_model');
         $this->load->model('user_model');
