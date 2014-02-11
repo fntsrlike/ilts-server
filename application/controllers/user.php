@@ -83,8 +83,12 @@ class User extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function api_read_user() {
+    public function api_read_user_info() {
         $this->input->post('id');
+
+        $user     = $this->user_model->read_user_by_name($username);
+        $identify = $this->identify_model->read_identify_by_uId($user->uId);
+        $provider = $this->user_model->get_provider($user->uId);
 
     }
 
