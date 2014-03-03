@@ -1,4 +1,4 @@
-@extends('portal.master')
+@extends('user.master')
 
 @section('content')
 

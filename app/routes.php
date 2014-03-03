@@ -54,7 +54,7 @@ Route::group(array('before' => 'guest_only'), function()
 Route::group(array('before' => 'auth_only'), function()
 {
     ## 使用者頁面
-    Route::get('portal/user', array( 'uses' => 'PortalController@user', 'as' => 'user', function()
+    Route::get('portal/user', array( 'uses' => 'UserController@info', 'as' => 'user', function()
     {
         var_dump(Session::get('user_being'));
     }));

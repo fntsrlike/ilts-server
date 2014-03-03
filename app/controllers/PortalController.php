@@ -4,10 +4,6 @@ class PortalController extends BaseController {
 
     protected $layout = 'portal.master';
 
-    public function test() {
-        echo "test";
-    }
-
     public function login(){
 
         $data = array();
@@ -215,12 +211,6 @@ class PortalController extends BaseController {
             return Redirect::route('user');
         }
 
-    }
-
-    public function user()
-    {
-        $data['user'] = (object) Session::get('user_being');
-        return View::make('portal/user', array('name' => 'user'))->with($data);
     }
 
     public function logout() {
