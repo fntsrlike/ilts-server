@@ -78,3 +78,55 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Custom
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::filter('auth_only', function()
+{
+
+    // 如果還沒登入，會轉移到登入頁面。
+
+    $is_login = (Session::has('user_being') && Session::get('user_being.status') == true);
+    if ( ! $is_login ) {
+        return Redirect::route('login');
+    }
+});
+
+Route::filter('admin_only', function()
+{
+
+    // 如果不是管理員，會被轉移到使用者主頁。
+
+    $admin_auth = 'ADMIN';
+    $authority  = (Session::has('user_being')) ? Session::get('user_being.authority') : '';
+
+    if ( strpos($authority, $admin_auth) == false) {
+        return Redirect::route('user');
+    }
+});
+
+Route::filter('guest_only', function()
+{
+    // 如果已經登入，會被轉移到使用者主頁
+
+    $is_login = (Session::has('user_being') || Session::get('user_being.status') == true);
+    if ( $is_login ) {
+        return Redirect::route('user');
+    }
+});
+
+Route::filter('oauth_only', function()
+{
+    // 如果沒有provider的資料，會被轉移到登入頁面
+
+    $is_oauth = (Session::has('oauth') || Session::get('oauth.status') == true);
+    if ( !$is_oauth ) {
+        return Redirect::route('login');
+    }
+});
