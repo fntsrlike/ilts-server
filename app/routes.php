@@ -12,37 +12,38 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+    return Input::get('test');
+	//return View::make('hello');
 });
 
 
-# Filter£ºÔL¿ÍŒ£…^¡£Ö»ÓÐÔL¿Í¿ÉÒÔ¿´µÄÂ·ÓÉ£¬ÒÑµÇÈëµÄÊ¹ÓÃÕßÔL†–±¾…^„tÖ±½ÓÞDµ½Ê¹ÓÃÕßí“Ãæ¡£
+# Filterï¼šè¨ªå®¢å°ˆå€ã€‚åªæœ‰è¨ªå®¢å¯ä»¥çœ‹çš„è·¯ç”±ï¼Œå·²ç™»å…¥çš„ä½¿ç”¨è€…è¨ªå•æœ¬å€å‰‡ç›´æŽ¥è½‰åˆ°ä½¿ç”¨è€…é é¢ã€‚
 Route::group(array('before' => 'guest_only'), function()
 {
 
-    ## µÇÈëí“Ãæ
+    ## ç™»å…¥é é¢
     Route::get('login' ,  function() { return Redirect::route('login');});
     Route::get('portal' , function() { return Redirect::route('login'); });
     Route::get('portal/login', array( 'uses' => 'PortalController@login',
                                       'as'   => 'login'));
 
-    ## Provider OAuth³ÌÐò
+    ## Provider OAuthç¨‹åº
     Route::get('portal/o/{provider?}', array( 'uses' => 'PortalController@oauth',
                                               'as'   => 'provider'));
 
 
-    # Filter£ºOAuthŒ£…^¡£Ö»ÓÐÒÑ½›±»ProviderÕJ¿ÉÇÒ½¨Á¢SeesionµÄÊ¹ÓÃÕß¿ÉÒÔÔL†–µÄí“Ãæ
+    # Filterï¼šOAuthå°ˆå€ã€‚åªæœ‰å·²ç¶“è¢«Providerèªå¯ä¸”å»ºç«‹Seesionçš„ä½¿ç”¨è€…å¯ä»¥è¨ªå•çš„é é¢
     Route::group(array('before' => 'oauth_only'), function()
     {
-        ## µÇÈë³ÌÐò
+        ## ç™»å…¥ç¨‹åº
         Route::get('portal/login_process', array( 'uses' => 'PortalController@login_process',
                                                   'as'   => 'process'));
 
-        ## Ô]ƒÔí“Ãæ
+        ## è¨»å†Šé é¢
         Route::get('portal/register', array( 'uses' => 'PortalController@register',
                                              'as'   => 'register'));
 
-        ## Ô]ƒÔ³ÌÐò
+        ## è¨»å†Šç¨‹åº
         Route::post('portal/register', array( 'uses' => 'PortalController@register_process',
                                               'as'   => 'register_process',
                                               'before' => 'csrf'));
@@ -50,21 +51,21 @@ Route::group(array('before' => 'guest_only'), function()
 });
 
 
-# Filter£ºÊ¹ÓÃÕßŒ£…^¡£Ö»ÓÐÔL¿Í¿ÉÒÔ¿´µÄÂ·ÓÉ£¬ÒÑµÇÈëµÄÊ¹ÓÃÕßÔL†–±¾…^„tÖ±½ÓÞDµ½Ê¹ÓÃÕßí“Ãæ¡£
+# Filterï¼šä½¿ç”¨è€…å°ˆå€ã€‚åªæœ‰è¨ªå®¢å¯ä»¥çœ‹çš„è·¯ç”±ï¼Œå·²ç™»å…¥çš„ä½¿ç”¨è€…è¨ªå•æœ¬å€å‰‡ç›´æŽ¥è½‰åˆ°ä½¿ç”¨è€…é é¢ã€‚
 Route::group(array('before' => 'auth_only'), function()
 {
-    ## Ê¹ÓÃÕßí“Ãæ
+    ## ä½¿ç”¨è€…é é¢
     Route::get('portal/user', array( 'uses' => 'UserController@info', 'as' => 'user', function()
     {
         var_dump(Session::get('user_being'));
     }));
 
-    ## µÇ³ö³ÌÐò
+    ## ç™»å‡ºç¨‹åº
     Route::get('portal/logout', array(  'uses' => 'PortalController@logout',
                                         'as'   => 'logout'));
 
 
-    # Filter£º¹ÜÀíÕßŒ£…^¡£Ö»ÓÐÒÑµÇÈëµÄ¹ÜÀíÕß¿ÉÒÔ¿´µÄÂ·ÓÉ£¬ÆäðNÕßÔL†–±¾…^Ö±½ÓÞDÈëÊ¹ÓÃÕßí“Ãæ£¬
+    # Filterï¼šç®¡ç†è€…å°ˆå€ã€‚åªæœ‰å·²ç™»å…¥çš„ç®¡ç†è€…å¯ä»¥çœ‹çš„è·¯ç”±ï¼Œå…¶é¤˜è€…è¨ªå•æœ¬å€ç›´æŽ¥è½‰å…¥ä½¿ç”¨è€…é é¢ï¼Œ
     Route::group(array('before' => 'admin_only'), function()
     {
         Route::get('ilt' , function()
@@ -73,6 +74,26 @@ Route::group(array('before' => 'auth_only'), function()
         });
     });
 
+    # Filterï¼šOAUTHå°ˆå€ã€‚
+    Route::group(array(), function()
+    {
+        Route::get('oauth/header', array( 'uses' => 'OAuthController@header'));
+        Route::get('oauth/auth_no_key', array( 'uses' => 'OAuthController@auth_no_key'));
+        Route::get('oauth/client_no_exist', array( 'uses' => 'OAuthController@client_no_exist'));
+
+        Route::get('oauth/auth_server/{client_key?}' ,
+            array( 'uses' => 'OAuthController@auth_server'));
+
+        Route::get('oauth/resource_server/{client_key?}' ,
+            array( 'uses' => 'OAuthController@resource_server'));
+
+        Route::get('oauth/resource_owner/{token}/{clientKey}' ,
+            array( 'uses' => 'OAuthController@resource_owner'));
+
+        Route::get('oauth/client' ,
+            array( 'uses' => 'OAuthController@client_tester'));
+
+        Route::get('oauth/client_done', array( 'uses' => 'OAuthController@client_done'));
+
+    });
 });
-
-

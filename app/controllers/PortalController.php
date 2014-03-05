@@ -6,6 +6,13 @@ class PortalController extends BaseController {
 
     public function login(){
 
+        if (Input::has('callback')) {
+            Session::put('portal.callback', urldecode(Input::get('callback')));
+        }
+        else {
+            Session::forget('portal.callback');
+        }
+
         $data = array();
         $data['url'] = array('google'   => action('PortalController@oauth', 'google'),
                              'facebook' => action('PortalController@oauth', 'facebook'));
@@ -92,6 +99,12 @@ class PortalController extends BaseController {
 
         Session::put('user_being', $session);
         Session::forget('oauth');
+
+        if ( true == Session::has('portal.callback')) {
+            $callback = Session::get('portal.callback');
+            Session::forget('portal.callback');
+            return Redirect::to($callback);
+        }
 
         return Redirect::route('user');
     }

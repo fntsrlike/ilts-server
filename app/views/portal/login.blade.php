@@ -32,6 +32,14 @@
     }
 
   </style>
+
+@if (Input::has('callback'))
+  <div class="alert alert-info" style="width: 700px; margin:auto; margin-bottom: 20px;">
+    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+    您現在所需的功能需要先登入後才能使用，在您登入後，我們即會為您轉回到原先的頁面。
+  </div>
+@endif
+
   <div class="container login-block">
     <div class="row">
       <div class="col-md-12 col-sm-12">

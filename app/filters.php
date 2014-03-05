@@ -94,7 +94,8 @@ Route::filter('auth_only', function()
 
     $is_login = (Session::has('user_being') && Session::get('user_being.status') == true);
     if ( ! $is_login ) {
-        return Redirect::route('login');
+        $current_uri = urlencode('http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        return Redirect::to( action('PortalController@login') . '?callback=' . $current_uri);
     }
 });
 
