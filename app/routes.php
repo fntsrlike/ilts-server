@@ -12,8 +12,7 @@
 
 Route::get('/', function()
 {
-    return Input::get('test');
-	//return View::make('hello');
+	return View::make('hello');
 });
 
 
@@ -78,22 +77,20 @@ Route::group(array('before' => 'auth_only'), function()
     Route::group(array(), function()
     {
         Route::get('oauth/header', array( 'uses' => 'OAuthController@header'));
-        Route::get('oauth/auth_no_key', array( 'uses' => 'OAuthController@auth_no_key'));
-        Route::get('oauth/client_no_exist', array( 'uses' => 'OAuthController@client_no_exist'));
+        Route::get('oauth/error001', array( 'uses' => 'OAuthController@argument_losing'));
+        Route::get('oauth/error002', array( 'uses' => 'OAuthController@client_no_exist'));
 
         Route::get('oauth/auth_server/{client_key?}' ,
             array( 'uses' => 'OAuthController@auth_server'));
 
-        Route::get('oauth/resource_server/{client_key?}' ,
-            array( 'uses' => 'OAuthController@resource_server'));
-
-        Route::get('oauth/resource_owner/{token}/{clientKey}' ,
+        Route::get('oauth/resource_owner' ,
             array( 'uses' => 'OAuthController@resource_owner'));
 
-        Route::get('oauth/client' ,
-            array( 'uses' => 'OAuthController@client_tester'));
-
-        Route::get('oauth/client_done', array( 'uses' => 'OAuthController@client_done'));
+        Route::post('oauth/resource_owner' ,
+            array( 'uses' => 'OAuthController@resource_owner'));
 
     });
 });
+
+Route::get('oauth/resource_server/' ,
+    array( 'uses' => 'OAuthController@resource_server'));

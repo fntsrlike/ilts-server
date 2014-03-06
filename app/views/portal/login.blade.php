@@ -43,7 +43,8 @@
   <div class="container login-block">
     <div class="row">
       <div class="col-md-12 col-sm-12">
-        <h1 class="text-center">伊爾特系統</h1>
+        <h1 class="text-center">幼稚鬼團登入頁面</h1>
+        <h4 class="text-center text-info">伊爾特系統，一個為了組織生態系所創建的會員系統</h4>
       </div>
     </div>
 

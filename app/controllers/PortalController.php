@@ -22,6 +22,7 @@ class PortalController extends BaseController {
 
 
     public function oauth($action) {
+
         // check URL segment
         if ($action == "auth") {
             // process authentication
@@ -50,6 +51,7 @@ class PortalController extends BaseController {
             $provider = $socialAuth->authenticate($provider);
             // fetch user profile
             $userProfile = $provider->getUserProfile();
+
         }
         catch(Exception $e) {
             // exception codes can be found on HybBridAuth's web site
@@ -66,7 +68,6 @@ class PortalController extends BaseController {
 
         // logout
         $provider->logout();
-
         return Redirect::action('PortalController@login_process');
     }
 
@@ -101,8 +102,10 @@ class PortalController extends BaseController {
         Session::forget('oauth');
 
         if ( true == Session::has('portal.callback')) {
+
             $callback = Session::get('portal.callback');
             Session::forget('portal.callback');
+
             return Redirect::to($callback);
         }
 
