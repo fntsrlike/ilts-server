@@ -1,21 +1,45 @@
-## Laravel PHP Framework
+伊爾特系統
+---
+## CH1: 關於
+### 簡述
+伊爾特系統（Ilt System），是透過使用者清單（List of User）、群組關係樹（Tree of Group Relationship）、辨識標籤（Identity Tag）組成的會員管理系統，取這三元素的頭字母為I-L-T，所以稱為伊爾特（Ilt）。
+### 特色
+- 整合OAuth登入與Provider的會員系統。
+- 將使用者、群組、權限整合在一起的會員系統。
+- 低耦合性，以伊爾特為中心，用OAuth Provider整合各項程式。
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework)
+## CH2: 安裝
+#### 步驟
+- 執行終端指令`git clone <本專案git位址>` 本專案到指定資料夾
+- 將網路伺服器設定根目錄到本專案的public資料夾，或是指定到本專案根目錄的server資料夾。_（註1）_
+- 執行終端指令`composer update`，更新vendor。_（註1）_
+- 編輯`app/config/app.php`，將url參數修改為本專案的根目錄，並且更新key參數的值。_（註1）_
+- 編輯`app/config/database.php`，修改資料庫連線參數。_（註1）_
+- 編輯`app/config/hybridauth.php`，修改base_url參數，以及providers的id與secret。_（註2） _
+- 編輯`app/config/mail.php`，修改Email Sever的相關參數。_（註1）_
+- 執行終端指令`php artisan migrate`，建立資料表。
+- 連線到網站，測試是否正常：
+    - 是否能正常看到頁面。
+    - 各項OAuth登入（Ex. Google, Facebook）是否都正常。
+    - 到處丟測資，看會不會出現系統錯誤訊息，若有，請檢查是否為伺服器環境的問題。若認為是程式問題，請到本專案的頁面提報Issue。
+- 清除各項測資。
+- 編輯`app/config/app.php`，將`debug`參數改為false。
+- 開始運作本網站囉！
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+#### 備註
+1. 詳細請參照[Laravel Framework][1]的說明文件。
+2. 詳細請參照[Hybridauth][2]官方文件或是[本說明頁面][3]。
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+## CH3: 架構
+### OAuth Login
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+### OAuth Provider
 
-## Official Documentation
+### Ilt
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
 
-### Contributing To Laravel
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
 
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+  [1]: http://laravel.com/
+  [2]: http://hybridauth.sourceforge.net/
+  [3]: http://www.mrcasual.com/on/coding/laravel4-package-management-with-composer/
