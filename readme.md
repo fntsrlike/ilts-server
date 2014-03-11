@@ -38,6 +38,41 @@
 
 ### OAuth Provider
 
+#### 簡介
+本專案的OAuth Provider是Fntsrlike參照網路上的說明自行刻造的小型OAuth Provider架構，相對於完整的規範可能會有許多缺失，會在日後其他部分皆完工後，在強化他的安全性與流程。若是有任何想法也歡迎到本專業網站開Issue或是進行Pull Request，感謝大家。
+
+有關於這部分的程式碼，請檢閱 `app/routes.php` 與 `app/controllers/OAuthController.php` 這兩個檔案，與其相對應的Models分別是 `app/models/OAuthAccessToken.php` 與 `app/models/OAuthClient.php`，資料表結構請參考本架構的Schema `app/database/migrations/` 與 `app/models/OAuthAccessToken.php` 。
+
+#### 流程
+1. **Client**向本架構的**Authorization Server**程序提出 `GET Request`，並附上下列資料，其中任一資料若是有誤皆會報錯，並引導使用者到錯誤說明頁面：
+    - **`client_key`** 做**Client**辨識。
+    - **`scope`** 作為權限要求的範圍。（註1）
+    - **`redirect_uri`** ，請求本程式在完成認證程序後，轉移到該URI。（註2）
+2. 檢驗 `User` 是否已經登入本專案網站，若沒登入，導向登入頁面引導登入，並在登入後導向回本認證程序。
+3. 檢驗 `User` 是否曾認可該 **Client** 的權限需求（包括Scope是否相同），若否則導向認可頁面，詢問使用者是否同意，同意則進入下一階段，若不同意則導向錯誤說明頁面。
+4. 若是上述驗證皆正確，則會將 `token` 透過 `GET Request` 發送到 **Client** 指定轉移的URI，使 **Client** 獲取該 `token` 。（註3、註4、註5）
+6. **Client** 在得到 `token` 後，即會像本架構的**Resource Server**程序，附上下列資料，透過後端（PHP）的方式，利用 `GET Request` 方法索取資源。
+    - **`token`**，即前部分所獲得的token，作為索取資源與範圍的辨識。
+    - **`client_key`**，作為 **Client** 的辨識，若是與 `token`當初指定的 **Client** 不同，則會報錯，回饋相關錯誤訊息給 **Client** 。
+    - **`client_secret`**，辨識 **Client** 的合法性，此 secret key 絕對不能外留給該 **Client** 管理員與開發者以外的人員，否則會造成資安漏洞。
+7. 本程序通過上述資料的檢驗後，將當初 `scope` 指定的資源給予 **Client**，完成程序。
+
+##### 備註
+1. Scope的使用說明請參照Scope List。
+2. 若是不符合當初Crentential申請所填的URI，則會報錯，引導使用者到說明頁面，表示此URI並不合法。
+3. 不清楚透過此方式是否安全，因為可能會導致token被劫取，相關資安問題有待研究。
+4. **Client** 獲取 `token` 後，會存在該 **Client**（或是用Session、或是用Cookies 等相關儲存方式，端看 **Client** 的程式設計。
+5. **Authorization Server**程序在產 `token` 時，會將以下資料記載資料庫中，以作為**Resource Server**程序的安全檢驗：
+    - **Client ID**，使 `token` 對 **Client** 俱有專一性。
+    - **User ID**，使 `token` 對 **User** 俱有專一性。
+    - **Expires**，本 `token` 的有效期限。若是過期， **Client** 需要另外要求新的 `token` 。
+    - **Scope**，作為 **Client** 能索取資源的權限範圍。若是 **Client** 改變 `Scope` ，則會另外產生新的 `token` ，並使原有的token過期、無效。
+
+
+#### 應用程式搭配
+
+
+
 ### Ilt
 
 
