@@ -54,10 +54,12 @@ Route::group(array('before' => 'guest_only'), function()
 Route::group(array('before' => 'auth_only'), function()
 {
     ## 使用者頁面
-    Route::get('portal/user', array( 'uses' => 'UserController@info', 'as' => 'user', function()
-    {
-        var_dump(Session::get('user_being'));
-    }));
+    Route::get('user/info', array( 'uses' => 'UserController@info', 'as' => 'user'));
+
+    Route::get('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
+    Route::post('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
+
+    Route::get('developer', array( 'uses' => 'DeveloperController@index'));
 
     ## 登出程序
     Route::get('portal/logout', array(  'uses' => 'PortalController@logout',

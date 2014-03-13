@@ -1,6 +1,8 @@
 @extends('master')
 
-@section('content')
+
+@section('head_css')
+  @parent
 <style type="text/css">
   .block {
     width: 860px;
@@ -25,9 +27,31 @@
   }
 
 </style>
+@stop
 
+@section('footer_scripts')
+  @parent
 
+<script type="text/javascript">
+$(function(){
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
+  $('.nav a').click(function (e) {
+    $(this).tab('show');
+    var scrollmem = $('body').scrollTop();
+    window.location.hash = this.hash;
+    $('html,body').scrollTop(scrollmem);
+  });
+
+  console.log('test');
+  console.log(typeof($));
+});
+</script>
+
+@stop
+
+@section('content')
 <div class="container block">
   <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -39,10 +63,22 @@
       <ul class="nav nav-justified nav-pills">
         <li><a href="#about" data-toggle="tab">關於</a></li>
         <li class="active"><a href="#user_info" data-toggle="tab">使用者</a></li>
+        <!-- <li><a href="#massages" data-toggle="tab">短訊（預計）</a></li> -->
         <li><a href="#auth_manage" data-toggle="tab">權限</a></li>
         <li><a href="#application" data-toggle="tab">申請</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            登出、切換 <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="{{action('PortalController@logout')}}">登出</a></li>
+            <li><a href="#">開發者介面</a></li>
+            <li><a href="#">管理者介面</a></li>
+            <li><a href="#">群組介面</a></li>
+          </ul>
+        </li>
         <!-- <li><a href="#">系統管理</a></li> -->
-        <li><a href="{{action('PortalController@logout')}}">登出</a></li>
+
       </ul>
     </div>
   </div>
@@ -145,6 +181,10 @@
         <p>
           以會治不營之中再成備有呢收一都一點考他節心企：河大水多，識然曾，帶水一感色致種，型如總論望自我張一了就本少所？日得觀歡研車起可的程能有傷己看中麼、簡小爭；也等所馬一車友機樣言美麼告人，個對分口數微力流口於的，清我一不學一。量感車岸到臺，作了少分具單減同結飯他麼、興歡經自，寫個益口聲果以素不值創喜戲相高服身舉電能品高冷加阿化成了要壓成完。
         </p>
+        <p class="text-center">
+          <button type="button" class="btn btn-primary">成為開發者</button>
+        </p>
+
         --
         <h4>群組申請與加入</h4>
         <p>
@@ -153,8 +193,13 @@
         <p>
           議之可研同星層子密東高眼相氣無般每現明我物回素久、期頭為當這，們人食且考在義個之，者金廣電十。入間內特麗境活會：了香分生產中公當品照人，朋權經，人心人算，頭更景要今們國來在強，團熱行花然過識母求少，屋裝哥表預型時道不！兒心進目我國已一示決著數：息錯家通來空我朋來道直方分建冷道性想養青中面一銀？力縣在家兒不中當來歷形時風說布子臺高送間家教國傳手也小經而。
         </p>
+        <p class="text-center">
+          <button type="button" class="btn btn-primary">建立群組</button>
+          <button type="button" class="btn btn-primary">加入群組</button>
+        </p>
       </div>
     </div>
   </div>
 </div>
+
 @stop
