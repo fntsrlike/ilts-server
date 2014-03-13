@@ -19,10 +19,7 @@ class CreateOauthTable extends Migration {
 		    $table->string('client_secret');
 		    $table->text('from_uri');
 		    $table->text('redirect_uri');
-		    $table->string('uri_type');
-		    $table->string('client_name');
-		    $table->text('client_describe');
-		    $table->integer('client_owner_uid')->unsigned();
+			$table->integer('project_id')->unsigned();
 		    $table->timestamps();
 		    $table->softDeletes();
 		});
@@ -47,7 +44,9 @@ class CreateOauthTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		$prefix = time() . '_';
+		Schema::rename('oauth_clients', 		$prefix . 'oauth_clients');
+		Schema::rename('oauth_access_tokens', 	$prefix . 'oauth_access_tokens');
 	}
 
 }

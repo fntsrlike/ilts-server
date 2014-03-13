@@ -14,7 +14,6 @@ class CreateIltTable extends Migration {
 	{
 		Schema::create('ilt_users', function($table)
 		{
-			$table->softDeletes();
 		    $table->increments('u_id');
 		    $table->string('u_username')->unique();
 		    $table->string('u_nick');
@@ -22,6 +21,7 @@ class CreateIltTable extends Migration {
 		    $table->string('u_status')->default('');
 		    $table->string('u_authority')->nullable();
 		    $table->timestamps();
+		    $table->softDeletes();
 
 		    // # 欄位特別說明
 		    //
@@ -130,7 +130,13 @@ class CreateIltTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		$prefix = time() . '_';
+		Schema::rename('ilt_users', 		$prefix . 'ilt_users');
+		Schema::rename('ilt_user_options', 	$prefix . 'ilt_user_options');
+		Schema::rename('ilt_user_providers',$prefix . 'ilt_user_providers');
+		Schema::rename('ilt_groups', 		$prefix . 'ilt_groups');
+		Schema::rename('ilt_identity_tags', $prefix . 'ilt_identity_tags');
+		Schema::rename('ilt_authority', 	$prefix . 'ilt_authority');
 	}
 
 }
