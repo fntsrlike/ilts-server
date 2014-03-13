@@ -62,19 +62,21 @@ Route::group(array('before' => 'auth_only'), function()
     ## 登出程序
     Route::get('portal/logout', array(  'uses' => 'PortalController@logout',
                                         'as'   => 'logout'));
+});
 
-
-    # Filter：管理者專區。只有已登入的管理者可以看的路由，其餘者訪問本區直接轉入使用者頁面，
-    Route::group(array('before' => 'admin_only'), function()
+# Filter：管理者專區。只有已登入的管理者可以看的路由，其餘者訪問本區直接轉入使用者頁面，
+Route::group(array('before' => 'auth_only|admin_only'), function()
+{
+    Route::get('ilt' , function()
     {
-        Route::get('ilt' , function()
-        {
-            return 'ilt page';
-        });
+        return 'ilt page';
     });
+});
 
-    # Filter：OAUTH專區。
-    Route::group(array(), function()
+# Filter：OAUTH專區。
+Route::group(array(), function()
+{
+    Route::group(array('before' => 'auth_only'), function()
     {
         Route::get('oauth/header', array( 'uses' => 'OAuthController@header'));
         Route::get('oauth/error001', array( 'uses' => 'OAuthController@argument_losing'));
@@ -88,9 +90,16 @@ Route::group(array('before' => 'auth_only'), function()
 
         Route::post('oauth/resource_owner' ,
             array( 'uses' => 'OAuthController@resource_owner'));
-
     });
+
+    Route::get('oauth/resource_server/', array( 'uses' => 'OAuthController@resource_server'));
 });
 
-Route::get('oauth/resource_server/' ,
-    array( 'uses' => 'OAuthController@resource_server'));
+# API
+Route::group(array('prefix' => 'v1/API/'), function()
+{
+    Route::resource('client', 'API_ClientController', array('as' => 'client'));
+
+});
+
+
