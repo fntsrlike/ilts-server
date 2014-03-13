@@ -96,9 +96,10 @@ Route::group(array(), function()
 });
 
 # API
-Route::group(array('prefix' => 'v1/API/'), function()
+Route::group(array('prefix' => 'v1/res/'), function()
 {
-    Route::resource('client', 'API_ClientController', array('as' => 'client'));
+    Route::resource('projects', 'API_ProjectController', array('as' => 'project'));
+    Route::resource('clients', 'API_ClientController', array('as' => 'client'));
 
 });
 

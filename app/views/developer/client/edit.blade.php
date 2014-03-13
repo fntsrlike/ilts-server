@@ -34,19 +34,11 @@
   </div>
   {{ Form::model($client, array('action' => array('API_ClientController@update', $client->client_id), 'method' => 'put')) }}
     <div class="container block">
-      <h3 class="text-center">Client API Key Application</h3>
+      <h3 class="text-center">Client API Edit</h3>
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <div class="form-group text-danger">
             {{ HTML::ul($errors->all())}}
-          </div>
-          <div class="form-group">
-            {{ Form::label('client_name', '應用程式名稱') }}
-            {{ Form::text('client_name', Input::old('client_name'), array('class' => 'form-control', 'placeholder' => '中、英文、數字、底線')) }}
-          </div>
-          <div class="form-group">
-            {{ Form::label('client_describe', '應用程式敘述') }}
-            {{ Form::textarea('client_describe', Input::old('client_describe'), array('class' => 'form-control', 'placeholder' => '200字以內敘述，讓使用者知道這個您的應用程式的用途')) }}
           </div>
           <div class="form-group">
             {{ Form::label('from_uri', '應用程式來源頁面 白名單（For JavaScript）') }}
@@ -58,7 +50,7 @@
           </div>
           <div class="form-group">
 
-            <button type="submit" class="btn btn-default pull-right">申請</button>
+            <button type="submit" class="btn btn-default pull-right">編輯</button>
           </div>
         </div>
       </div>

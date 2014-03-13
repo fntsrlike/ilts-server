@@ -34,19 +34,11 @@
   </div>
   {{ Form::open(array('action' => 'API_ClientController@store')) }}
     <div class="container block">
-      <h3 class="text-center">Client API Key Application</h3>
+      <h3 class="text-center">Client Key Application</h3>
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <div class="form-group text-danger">
             {{ HTML::ul($errors->all()) }}
-          </div>
-          <div class="form-group">
-            {{ Form::label('input_name', '應用程式名稱') }}
-            {{ Form::text('input_client_name', Input::old('input_name'), array('class' => 'form-control', 'placeholder' => '中、英文、數字、底線')) }}
-          </div>
-          <div class="form-group">
-            {{ Form::label('input_describe', '應用程式敘述') }}
-            {{ Form::textarea('input_describe', Input::old('input_describe'), array('class' => 'form-control', 'placeholder' => '200字以內敘述，讓使用者知道這個您的應用程式的用途')) }}
           </div>
           <div class="form-group">
             {{ Form::label('input_from_uri', '應用程式來源頁面 白名單（For JavaScript）') }}
