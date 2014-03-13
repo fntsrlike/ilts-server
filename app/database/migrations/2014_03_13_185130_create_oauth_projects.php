@@ -17,7 +17,7 @@ class CreateOauthProjects extends Migration {
             $table->increments('project_id');
             $table->string('name');
             $table->string('describe');
-            $table->integer('devloper_id')->unsigned();;
+            $table->integer('developer_id')->unsigned();;
             $table->string('email');
             $table->string('homepage_url');
             $table->string('logo_url');
