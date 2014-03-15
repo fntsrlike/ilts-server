@@ -6,7 +6,7 @@ class DeveloperController extends BaseController {
 
     public function index()
     {
-
+        return View::make('developer/info')->with($data);
     }
 
 
