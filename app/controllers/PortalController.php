@@ -95,8 +95,12 @@ class PortalController extends BaseController {
                             'identifier'=> $identifier,
                             'u_id'      => $user->u_id,
                             'username'  => $user->u_username,
-                            'authority' => $user->u_authority,
+                            'authority' => explode(',', $user->u_authority) ,
                             'level'     => $user->u_status);
+
+        if ( !is_array($session['authority']) ) {
+            $session['authority'] = array($session['authority']);
+        }
 
         Session::put('user_being', $session);
         Session::forget('oauth');
