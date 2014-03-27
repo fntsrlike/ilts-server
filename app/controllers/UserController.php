@@ -4,7 +4,35 @@ class UserController extends BaseController {
 
     protected $layout = 'master';
 
-    public function info()
+    public function __construct() {
+        Form::macro('bs_text', function($label, $name, $id, $placeholder, $default="")
+        {
+            return <<<_END
+            <div class="form-group">
+              <label for="{$id}" class="col-sm-2 control-label">{$label}</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" name="{$name}" id="{$id}" placeholder="{$placeholder}" value="{$default}">
+              </div>
+            </div>
+_END;
+        });
+
+        Form::macro('bs_area', function($label, $name, $id, $placeholder, $default="")
+        {
+            return <<<_END
+            <div class="form-group">
+              <label for="{$id}" class="col-sm-2 control-label">{$label}</label>
+              <div class="col-sm-10">
+                  <textarea class="form-control" name="{$name}" id="{$id}" placeholder="{$placeholder}>
+                    {$default}
+                  </textarea>
+              </div>
+            </div>
+_END;
+        });
+    }
+
+    public function index()
     {
         $user = IltUser::find(Session::get('user_being.u_id'));
         $user_option = IltUserOptions::find(Session::get('user_being.u_id'));
@@ -12,6 +40,9 @@ class UserController extends BaseController {
         $data['provider']    = Session::get('user_being.provider');
         $data['user']        = $user;
         $data['user_option'] = $user_option;
+        $date['is_developer']= in_array('DEVELOPER', Session::get('user_being.authority') );
+
+
         return View::make('user/info', array('name' => 'user'))->with($data);
     }
 

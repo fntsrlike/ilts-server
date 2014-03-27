@@ -25,7 +25,7 @@ class OAuthController extends BaseController {
 
             if( true == Session::has('auth_srv.client_key') ) {
                 $client_key = Session::get('auth_srv.client_key');
-                Session::forgot('auth_srv');
+                Session::forget('auth_srv');
             }
             else {
                 return Redirect::action('OAuthController@argument_losing');
@@ -75,7 +75,7 @@ class OAuthController extends BaseController {
         else {
             // 用Session記錄client_key，讓轉移來回時仍能保存。會在後段使用後消除。
             Session::put('iltOAuth.client_key', $client_key);
-            Session::put('iltOAuth.callback', 'auth_sever');
+            Session::put('iltOAuth.callback', 'auth_server');
             Session::put('iltOAuth.scope', $scope);
             Session::put('iltOAuth.redirect_uri', $redirect_uri);
 
@@ -97,7 +97,7 @@ class OAuthController extends BaseController {
         $client_key      = Session::get('iltOAuth.client_key');
         $redirect_method = Session::get('iltOAuth.callback');
         $scope           = Session::get('iltOAuth.scope');
-        $expires         = Session::get('iltOAuth.expires');
+        $expires         = Session::get('iltOAuth.expires', 180);
         $redirect_uri    = Session::get('iltOAuth.redirect_uri');
         $client_query    = OAuthClient::where('client_key', '=', $client_key);
         Session::forget('iltOAuth');
@@ -109,6 +109,8 @@ class OAuthController extends BaseController {
 
         $u_id        = Session::get('user_being.u_id');
         $client      = $client_query->first();
+        $project     = OAuthProject::find($client->project_id);
+
         $token_query = OAuthAccessToken::where('client_id', '=', $client->client_id)->where('user_id', '=', $u_id);
 
         # TODO: 加入判定條件，檢查Scope是否相同。若是相同且有效才跳回去。
@@ -134,13 +136,13 @@ class OAuthController extends BaseController {
                 $require_list .= "<p>{$icon}{$value}</p>";
             }
 
-            $manager = IltUser::find($client->client_owner_uid);
+            $manager = IltUser::find($project->developer_id);
 
             # TODO: 補上作者資訊、應用程式描述、token的有效期限
             $data['app_info']       = "{$manager->u_nick} ({$manager->u_username}) [{$manager->u_email}]";
-            $data['app_describe']   = $client->client_describe;
+            $data['app_describe']   = $project->describe;
             $data['action']     = action('OAuthController@resource_owner');
-            $data['app_name']   = $client->client_name;
+            $data['app_name']   = $project->name;
             $data['require']    = $require_list;
 
             Session::put('iltOAuth', $iltOAuth);
@@ -156,6 +158,7 @@ class OAuthController extends BaseController {
                 $access_token->access_token = $token;
                 $access_token->client_id    = $client->client_id;
                 $access_token->user_id      = $u_id;
+                $access_token->expires      = date('Y-m-d', time() + $expires * 24 * 3600);
                 $access_token->save();
 
                 Session::put('auth_srv.client_key', $client_key);
@@ -203,7 +206,7 @@ class OAuthController extends BaseController {
 
         $access_token = OAuthAccessToken::where('access_token', '=', $token)->first();
         $is_token_expired = ( strtotime($access_token->expires) < time() );
-
+        $is_token_expired = false;
         // 確認Token是否過期，若過期僅回報狀態碼，不在這裡處理。那是Authorization Server 專司之事。
         if ($is_token_expired) {
             $result['status'] = 2;

@@ -26,29 +26,16 @@
     font-size: 14px;
   }
 
+  textarea.form-control {
+    height:100px;
+  }
+
 </style>
 @stop
 
 @section('footer_scripts')
   @parent
-
-<script type="text/javascript">
-$(function(){
-  var hash = window.location.hash;
-  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-  $('.nav a').click(function (e) {
-    $(this).tab('show');
-    var scrollmem = $('body').scrollTop();
-    window.location.hash = this.hash;
-    $('html,body').scrollTop(scrollmem);
-  });
-
-  console.log('test');
-  console.log(typeof($));
-});
-</script>
-
+  <script src="{{asset('assets/js/developer.js')}}"></script>
 @stop
 
 @section('content')
@@ -72,7 +59,7 @@ $(function(){
             <li><a href="{{action('PortalController@logout')}}">登出</a></li>
 
             <li>
-              <a href="{{action('UserController@info')}}">
+              <a href="{{action('UserController@index')}}">
                 使用者介面
               </a>
             </li>

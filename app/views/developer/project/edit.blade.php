@@ -34,7 +34,7 @@
   </div>
   {{ Form::model($project, array('action' => array('API_ProjectController@update', $project->project_id), 'method' => 'put')) }}
     <div class="container block">
-      <h3 class="text-center">Client API Key Application</h3>
+      <h3 class="text-center">Project Application</h3>
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <div class="form-group text-danger">
@@ -69,7 +69,7 @@
             {{ Form::text('terms_of_service_url', Input::old('terms_of_service_url'), array('class' => 'form-control', 'placeholder' => '')) }}
           </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-default pull-right">申請</button>
+            <button type="submit" class="btn btn-default pull-right">送出</button>
           </div>
         </div>
       </div>

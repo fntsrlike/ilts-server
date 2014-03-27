@@ -64,7 +64,7 @@ class API_ProjectController extends \BaseController {
             $project->terms_of_service_url 	= Input::get('terms_of_service_url');
             $project->save();
 
-            return Redirect::action('API_ProjectController@index');
+            return Redirect::to('./developer#projects');
         }
     }
 
@@ -131,7 +131,8 @@ class API_ProjectController extends \BaseController {
             $project->terms_of_service_url 	= Input::get('terms_of_service_url');
             $project->save();
 
-            return Redirect::action('API_ProjectController@index');
+            return Redirect::to('./developer#projects');
+
         }
     }
 

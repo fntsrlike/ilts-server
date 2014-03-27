@@ -9,8 +9,13 @@ class API_ClientController extends \BaseController {
      */
     public function index()
     {
-        $client = OAuthClient::all();
-        return Response::json($client);
+        $project = new OAuthProject;
+        $project->where('developer_id', '=', Session::get('user_being.u_id'));
+
+        $client = new OAuthClient;
+        $client->where('project_id', '=', $project->project_id);
+
+        return Response::json($client->get());
     }
 
     /**
@@ -33,11 +38,13 @@ class API_ClientController extends \BaseController {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
         $rules = array(
+                'project_id'        => 'required',
                 'input_from_uri'    => 'required',
                 'input_redirect_uri'=> 'required'
                 );
 
         $messages = array(
+                'project_id'                    => '專案代碼有誤！',
                 'input_from_uri.required'       => '「應用程式來源白名單」是必填欄位！',
                 'input_redirect_uri.required'   => '「應用程式轉向白名單」是必填欄位！',
                 );
@@ -48,14 +55,20 @@ class API_ClientController extends \BaseController {
             return Redirect::action('API_ClientController@create')->withErrors($validator)->withInput();
         }
         else {
+            $project = OAuthProject::find(Input::get('project_id'));
+
+            if ( $project->developer_id != Session::get('user_being.u_id') ) {
+                return '權限錯誤，請勿擅自更改project id的輸入值！';
+            }
+
             $client = new OAuthClient;
             $client->client_key     = OAuthClient::generateKey(true);
             $client->client_secret  = OAuthClient::generateKey();
-            $client->project_id    = 1;
+            $client->project_id     = Input::get('project_id');
             $client->from_uri       = Input::get('input_from_uri');
             $client->redirect_uri   = Input::get('input_redirect_uri');
             $client->save();
-            return Redirect::action('API_ClientController@index');
+            return Redirect::to('./developer#projects');
         }
     }
 
@@ -91,7 +104,6 @@ class API_ClientController extends \BaseController {
      */
     public function update($id)
     {
-        //exit("required|unique:oauth_clients,client_name,$id,client_id");
         $this->beforeFilter('csrf', array('on' => 'post'));
 
         $rules = array(
@@ -110,11 +122,17 @@ class API_ClientController extends \BaseController {
             return Redirect::action('API_ClientController@edit', $id)->withErrors($validator)->withInput();
         }
         else {
-            $client = OAuthClient::find($id);
+            $client  = OAuthClient::find($id);
+            $project = OAuthProject::find($client->project_id);
+
+            if ( $project->developer_id != Session::get('user_being.u_id') ) {
+                return '你沒有權限修改！';
+            }
+
             $client->from_uri           = Input::get('from_uri');
             $client->redirect_uri       = Input::get('redirect_uri');
             $client->save();
-            return Redirect::action('API_ClientController@index');
+            return Redirect::to('./developer#projects');
         }
     }
 
@@ -127,7 +145,16 @@ class API_ClientController extends \BaseController {
     public function destroy($id)
     {
         $client = OAuthClient::find($id);
+        $project = OAuthProject::find($client->project_id);
+        $response = array('project_id' => $client->project_id);
+
+        if ( $project->developer_id != Session::get('user_being.u_id') ) {
+            return '你沒有權限修改！';
+        }
+
         $client->delete();
+
+        return Response::json($response);
     }
 
 }

@@ -10,18 +10,13 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
-
 # Filter：訪客專區。只有訪客可以看的路由，已登入的使用者訪問本區則直接轉到使用者頁面。
 Route::group(array('before' => 'guest_only'), function()
 {
 
     ## 登入頁面
-    Route::get('login' ,  function() { return Redirect::route('login');});
+    Route::get('/', function()  { return Redirect::route('login'); });
+    Route::get('login' ,  function() { return Redirect::route('login'); });
     Route::get('portal' , function() { return Redirect::route('login'); });
     Route::get('portal/login', array( 'uses' => 'PortalController@login',
                                       'as'   => 'login'));
@@ -54,12 +49,13 @@ Route::group(array('before' => 'guest_only'), function()
 Route::group(array('before' => 'auth_only'), function()
 {
     ## 使用者頁面
-    Route::get('user/info', array( 'uses' => 'UserController@info', 'as' => 'user'));
+    Route::get('user/info', array( 'uses' => 'UserController@index', 'as' => 'user'));
 
     Route::get('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
     Route::post('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
 
     Route::get('developer', array( 'uses' => 'DeveloperController@index'));
+    Route::get('admin', array( 'uses' => 'AdminController@index'));
 
     ## 登出程序
     Route::get('portal/logout', array(  'uses' => 'PortalController@logout',
@@ -102,7 +98,4 @@ Route::group(array('prefix' => 'v1/res/'), function()
 {
     Route::resource('projects', 'API_ProjectController', array('as' => 'project'));
     Route::resource('clients', 'API_ClientController', array('as' => 'client'));
-
 });
-
-
