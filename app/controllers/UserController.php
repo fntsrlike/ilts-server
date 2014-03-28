@@ -36,7 +36,7 @@ _END;
     {
         $user = IltUser::find(Session::get('user_being.u_id'));
         $user_option = IltUserOptions::find(Session::get('user_being.u_id'));
-        $authority = is_array()Session::get('user_being.authority');
+        $authority = Session::get('user_being.authority')
 
         $data['provider']    = Session::get('user_being.provider');
         $data['user']        = $user;
