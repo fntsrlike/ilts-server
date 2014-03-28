@@ -36,12 +36,11 @@ _END;
     {
         $user = IltUser::find(Session::get('user_being.u_id'));
         $user_option = IltUserOptions::find(Session::get('user_being.u_id'));
-        $authority = Session::get('user_being.authority')
 
         $data['provider']    = Session::get('user_being.provider');
         $data['user']        = $user;
         $data['user_option'] = $user_option;
-        $date['is_developer']= in_array('DEVELOPER',  );
+        $date['is_developer']= in_array('DEVELOPER', Session::get('user_being.authority') );
 
 
         return View::make('user/info', array('name' => 'user'))->with($data);
