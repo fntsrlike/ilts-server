@@ -75,7 +75,14 @@ _END;
                 }
 
                 $user->save();
-                Session::put('user_being.authority', $user->u_authority);
+
+                $session['authority'] = explode(',', $user->u_authority);
+
+                if ( !is_array($session['authority']) ) {
+                    $session['authority'] = array($session['authority']);
+                }
+
+                Session::put('user_being.authority', $session['authority']);
 
                 return Redirect::action('DeveloperController@index');
             }
