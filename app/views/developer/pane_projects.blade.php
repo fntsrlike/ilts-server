@@ -3,6 +3,13 @@
   <div class="col-md-12 col-sm-12">
     <div class="row">
       <div id="project-list" class="col-md-12 col-sm-12">
+        <div style="margin-bottom: 20px;">
+          <a href="{{url('v1/res/projects/create', $parameters = array(), $secure = null)}}">
+            <button class="btn btn-primary btn-sm">
+              Create New Project
+            </button>
+          </a>
+        </div>
         <table class="table" id="projects_table">
           <thead>
             <td>序號</td>

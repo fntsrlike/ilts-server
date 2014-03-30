@@ -85,6 +85,7 @@ $( function() {
       project_link_tag = '<a href="' + ns_developer.api_url.projects + '/' + project.project_id + '/edit">';
       client_link_tag = '<a href="#projects" class="project_link" for="' + project.project_id + '">';
 
+
       tr = '<td>' + sort + '</td>';
       tr += '<td>' + project_link_tag + project.name + '</a></td>';
       tr += '<td>' + client_link_tag + 'Client管理' + '</a></td>';
@@ -144,6 +145,22 @@ $( function() {
     $( '#return_project_list' ).click( function() {
       $( '#project-clients' ).addClass( 'hide' );
       $( '#project-list' ).removeClass( 'hide' );
+    });
+
+    $( 'a[project_method="delete"' ).click( function() {
+      var
+      url = $( this ).attr( 'href' );
+
+      event.preventDefault();
+
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'json'
+      })
+      .done( function() {
+        ns_developer.get_projects();
+      });
     });
   };
 
