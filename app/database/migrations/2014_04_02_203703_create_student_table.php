@@ -17,9 +17,9 @@ class CreateStudentTable extends Migration {
 		    $table->increments('id');
 		    $table->integer('u_id')->unsigned()->unique();
 		    $table->string('email');
-		    $table->integer('number')->unsigned();
-		    $table->string('department');
-		    $table->integer('grade')->unsigned();
+		    $table->integer('number')->nullable()->unsigned();
+		    $table->string('department')->nullable();
+		    $table->integer('grade')->nullable()->unsigned();
 		    $table->boolean('is_valid')->default(false);
 		    $table->timestamps();
 		    $table->softDeletes();
