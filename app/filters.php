@@ -131,3 +131,41 @@ Route::filter('oauth_only', function()
         return Redirect::route('login');
     }
 });
+
+Route::filter('apply_student', function()
+{
+    $user    = IltUser::find(Session::get('user_being.u_id'));
+    $student = IltUserStudent::where('u_id', '=', $user->u_id)->first();
+
+    if ( false !== stripos($user->u_authority, 'STUDENT' )) {
+        return Redirect::action('UserController@index');
+    }
+    elseif ( null !== $student && null !== $student->number ) {
+        return View::make('student/apply_form_already');
+    }
+});
+
+Route::filter('apply_student_files', function()
+{
+    $student_orm = IltUserStudent::where('u_id', '=', Session::get('user_being.u_id'))->first();
+
+    if ( $student_orm === null ) {
+        return Redirect::action('StudentController@apply_email');
+    }
+});
+
+
+Route::filter('reload_authority', function()
+{
+    $user    = IltUser::find(Session::get('user_being.u_id'));
+    $session['authority'] = explode(',', $user->u_authority);
+
+    if ( !is_array($session['authority']) ) {
+        $session['authority'] = array($session['authority']);
+    }
+
+    Session::put('user_being.authority', $session['authority']);
+});
+
+
+

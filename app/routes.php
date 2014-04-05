@@ -53,6 +53,18 @@ Route::group(array('before' => 'auth_only'), function()
 
     Route::get('email_vallidation/{type}/{code}', array( 'uses'=> 'UserController@email_vallidate'));
 
+    Route::group(array('before' => 'apply_student'), function()
+    {
+        Route::get('user/apply/student/email', array( 'uses' => 'StudentController@apply_email'));
+        Route::post('user/apply/student/email', array( 'uses' => 'StudentController@apply_email_process'));
+
+        Route::group(array('before' => 'apply_student_files'), function()
+        {
+            Route::get('user/apply/student/files', array( 'uses' => 'StudentController@apply_files'));
+            Route::post('user/apply/student/files', array( 'uses' => 'StudentController@apply_files_process', 'after' => 'reload_authority'));
+        });
+    });
+
     Route::get('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
     Route::post('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
 
