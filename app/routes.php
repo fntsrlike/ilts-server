@@ -51,6 +51,8 @@ Route::group(array('before' => 'auth_only'), function()
     ## 使用者頁面
     Route::get('user/info', array( 'uses' => 'UserController@index', 'as' => 'user'));
 
+    Route::get('email_vallidation/{type}/{code}', array( 'uses'=> 'UserController@email_vallidate'));
+
     Route::get('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
     Route::post('user/apply/developer', array( 'uses' => 'UserController@apply_developer'));
 
@@ -99,3 +101,5 @@ Route::group(array('prefix' => 'v1/res/'), function()
     Route::resource('projects', 'API_ProjectController', array('as' => 'project'));
     Route::resource('clients', 'API_ClientController', array('as' => 'client'));
 });
+
+

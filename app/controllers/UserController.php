@@ -48,6 +48,12 @@ _END;
 
     public function apply_developer()
     {
+        $user = IltUser::find(Session::get('user_being.u_id'));
+
+        if ( false !== stripos($user->u_authority, 'DEVELOPER' )) {
+            return Redirect::action('DeveloperController@index');
+        }
+
         if(Input::has('agree')) {
             $this->beforeFilter('csrf', array('on' => 'post'));
 
@@ -90,6 +96,42 @@ _END;
         else {
             return View::make('developer/terms');
         }
+    }
+
+    public function email_vallidate($type, $code) {
+
+        $type = strtoupper($type);
+        $user = IltUser::find(Session::get('user_being.u_id'));
+        $email_orm = IltEmailVallisations::where('type', '=', $type)
+                                     ->where('code', '=', $code)
+                                     ->where('expires', '>', date('Y-m-d'))
+                                     ->first();
+
+        if ( false !== stripos($user->u_authority, $type )) {
+            return View::make('user.email_vallidate_result', array('status' => 'already'));
+        }
+        elseif ( $email_orm == null ) {
+            return View::make('user.email_vallidate_result', array('status' => 'not_found'));
+        }
+        elseif ( $email_orm->u_id != Session::get('user_being.u_id') ) {
+            return View::make('user.email_vallidate_result', array('status' => 'not_match'));
+        }
+
+        $email = $email_orm->email;
+        $email_orm->delete();
+
+        switch ($type) {
+            case 'STUDENT':
+                $student = new IltUserStudent;
+                $student->u_id       = Session::get('user_being.u_id');
+                $student->email      = $email;
+                $student->save();
+                return Redirect::action('StudentController@apply_files_process');
+
+            default:
+                return View::make('user.email_vallidate_result', array('status' => 'success'));
+        }
+
     }
 
 
