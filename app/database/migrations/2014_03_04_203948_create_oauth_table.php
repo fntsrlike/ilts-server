@@ -44,9 +44,11 @@ class CreateOauthTable extends Migration {
 	 */
 	public function down()
 	{
-		$prefix = time() . '_';
-		Schema::rename('oauth_clients', 		$prefix . 'oauth_clients');
-		Schema::rename('oauth_access_tokens', 	$prefix . 'oauth_access_tokens');
+		$prefix = 'bak_';
+		$suffix = '_' . date('YmdHis');
+
+		Schema::rename('oauth_clients', 		$prefix . 'oauth_clients' . $suffix);
+		Schema::rename('oauth_access_tokens', 	$prefix . 'oauth_access_tokens' . $suffix);
 	}
 
 }

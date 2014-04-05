@@ -17,7 +17,7 @@ class CreateOauthProjects extends Migration {
             $table->increments('project_id');
             $table->string('name');
             $table->string('describe');
-            $table->integer('developer_id')->unsigned();;
+            $table->integer('developer_id')->unsigned();
             $table->string('email');
             $table->string('homepage_url');
             $table->string('logo_url');
@@ -35,8 +35,10 @@ class CreateOauthProjects extends Migration {
      */
     public function down()
     {
-        $prefix = 'bak_' . time() . '_';
-        Schema::rename('oauth_projects', $prefix . 'oauth_projects');
+        $prefix = 'bak_';
+        $suffix = '_' . date('YmdHis');
+
+        Schema::rename('oauth_projects', $prefix . 'oauth_projects' . $suffix);
     }
 
 }

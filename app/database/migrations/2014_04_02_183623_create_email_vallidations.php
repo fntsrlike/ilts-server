@@ -32,8 +32,10 @@ class CreateEmailVallidations extends Migration {
 	 */
 	public function down()
 	{
-		$prefix = 'bak_' . time() . '_';
-        Schema::rename('ilt_email_vallidations', $prefix . 'ilt_email_vallidations');
+		$prefix = 'bak_';
+        $suffix = '_' . date('YmdHis');
+
+        Schema::rename('ilt_email_vallidations', $prefix . 'ilt_email_vallidations' . $suffix);
 	}
 
 }

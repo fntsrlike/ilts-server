@@ -130,13 +130,15 @@ class CreateIltTable extends Migration {
 	 */
 	public function down()
 	{
-		$prefix = time() . '_';
-		Schema::rename('ilt_users', 		$prefix . 'ilt_users');
-		Schema::rename('ilt_user_options', 	$prefix . 'ilt_user_options');
-		Schema::rename('ilt_user_providers',$prefix . 'ilt_user_providers');
-		Schema::rename('ilt_groups', 		$prefix . 'ilt_groups');
-		Schema::rename('ilt_identity_tags', $prefix . 'ilt_identity_tags');
-		Schema::rename('ilt_authority', 	$prefix . 'ilt_authority');
+		$prefix = 'bak_';
+		$suffix = '_' . date('YmdHis');
+
+		Schema::rename('ilt_users', 		$prefix . 'ilt_users' . $suffix);
+		Schema::rename('ilt_user_options', 	$prefix . 'ilt_user_options' . $suffix);
+		Schema::rename('ilt_user_providers',$prefix . 'ilt_user_providers' . $suffix);
+		Schema::rename('ilt_groups', 		$prefix . 'ilt_groups' . $suffix);
+		Schema::rename('ilt_identity_tags', $prefix . 'ilt_identity_tags' . $suffix);
+		Schema::rename('ilt_authority', 	$prefix . 'ilt_authority' . $suffix);
 	}
 
 }

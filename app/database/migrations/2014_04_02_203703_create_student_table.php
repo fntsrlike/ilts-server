@@ -33,8 +33,10 @@ class CreateStudentTable extends Migration {
 	 */
 	public function down()
 	{
-		$prefix = 'bak_' . time() . '_';
-        Schema::rename('ilt_user_students', $prefix . 'ilt_user_students');
+		$prefix = 'bak_';
+		$suffix = '_' . date('YmdHis');
+
+        Schema::rename('ilt_user_students', $prefix . 'ilt_user_students' . $suffix);
 	}
 
 }
