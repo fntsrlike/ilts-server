@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <p class="text-info text-center">
-          Created by Fntsrlike, Maintaining by CHILDISH <br/>
+          Created by Fntsrlike, Maintaining by {{Config::get('sites.maintainer')}} <br/>
           Copyright © 2014 Fntsrlike. All Rights Reserved
         </p>
       </div>

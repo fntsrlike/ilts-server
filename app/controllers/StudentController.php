@@ -58,7 +58,7 @@ class StudentController extends BaseController {
 
             $data = array(
                 'username'  => $username,
-                'unit'      => '幼稚鬼團',
+                'unit'      => Config::get('sites.name'),
                 'link'      => action( 'UserController@email_vallidate', array('student', $code) )
             );
 
