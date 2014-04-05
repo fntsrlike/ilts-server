@@ -34,13 +34,50 @@ _END;
 
     public function index()
     {
-        $user = IltUser::find(Session::get('user_being.u_id'));
-        $user_option = IltUserOptions::find(Session::get('user_being.u_id'));
+        $u_id = Session::get('user_being.u_id');
+        $user = IltUser::find($u_id);
+        $user_option = IltUserOptions::find($u_id);
+        $user_providers = IltUserProvider::where('u_id', '=', $u_id)->get();
+        $user_providers_arr = array();
+        $providers = Config::get('sites.providers');
+        $providers_info = '';
+        $access_clients = OAuthAccessToken::where('user_id', '=', $u_id)->get();
+        $project = array();
+        $projects_info = '';
 
-        $data['provider']    = Session::get('user_being.provider');
-        $data['user']        = $user;
-        $data['user_option'] = $user_option;
-        $date['is_developer']= in_array('DEVELOPER', Session::get('user_being.authority') );
+        foreach ($user_providers as $user_provider) {
+            $user_providers_arr[] = $user_provider->u_p_type;
+        }
+
+        foreach ($providers as $provider) {
+            if ( in_array($provider, $user_providers_arr) ) {
+                $providers_info .= '<li>' . $provider . '：' . '<span class="text-success">已通過</span></li>';
+            }
+            else {
+                $providers_info .= '<li>' . $provider . '：' . '<span class="text-muted">尚未認證</span></li>';
+            }
+        }
+
+        foreach ($access_clients as $access_client) {
+            $client = OAuthClient::where('client_id', '=', $access_client->client_id)->first();
+            $project = OAuthProject::find($client->project_id);
+
+            if ( $access_client->expires < time() ) {
+                $projects_info .= '<li>' . $project->name . '：' . '<span class="text-success">已通過</span></li>';
+            }
+            else {
+                $projects_info .= '<li>' . $project->name . '：' . '<span class="text-muted">已過期</span></li>';
+            }
+
+
+        }
+
+        $data['provider']       = Session::get('user_being.provider');
+        $data['providers_info'] = $providers_info;
+        $data['projects_info']  = $projects_info;
+        $data['user']           = $user;
+        $data['user_option']    = $user_option;
+        $date['is_developer']   = in_array('DEVELOPER', Session::get('user_being.authority') );
 
 
         return View::make('user/info', array('name' => 'user'))->with($data);
