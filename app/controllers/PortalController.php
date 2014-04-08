@@ -110,7 +110,29 @@ class PortalController extends BaseController {
             $callback = Session::get('portal.callback');
             Session::forget('portal.callback');
 
-            return Redirect::to($callback);
+            $parse_url = parse_url($callback);
+
+            $query = explode('&', $parse_url['query']);
+            $query_checked = '';
+
+            foreach ($query as $arg) {
+                $arguement = explode('=', $arg);
+                $key = $arguement[0];
+                $value = $arguement[1];
+
+                if ( !(false === stripos($value, 'http')) || !(false === stripos($value, ' ')) ) {
+                    $value = urlencode($value);
+                }
+
+                $query_checked .= empty($query) ? '' : '&';
+                $query_checked .= $key . '=' . $value;
+            }
+
+
+            $url =  $parse_url['scheme'] . '://' . $parse_url['host'] . '' .
+                    $parse_url['path'] . '?' . $query_checked;
+
+            return Redirect::to($url);
         }
 
         return Redirect::route('user');
