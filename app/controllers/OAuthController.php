@@ -138,7 +138,10 @@ class OAuthController extends BaseController {
 
             // 使用者是否同意授權，若同意及產生Token回傳callback，若反對則傳回原應用程式位置
             if ( 'true' == Input::get('request_answer' )) {
-                OAuthAccessToken::where('user_id', '=', $u_id)->first()->delete();
+                $origin_token = OAuthAccessToken::where('user_id', '=', $u_id)->first();
+                if ( $origin_token != null ) {
+                    $origin_token->delete();
+                }
 
                 $token = md5($this->generateKey(true));
 
