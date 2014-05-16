@@ -85,11 +85,12 @@ $( function() {
       project_link_tag = '<a href="' + ns_developer.api_url.projects + '/' + project.project_id + '/edit">';
       client_link_tag = '<a href="#projects" class="project_link" for="' + project.project_id + '">';
 
-
-      tr = '<td>' + sort + '</td>';
+      tr = '<tr>';
+      tr += '<td>' + sort + '</td>';
       tr += '<td>' + project_link_tag + project.name + '</a></td>';
       tr += '<td>' + client_link_tag + 'Client管理' + '</a></td>';
       tr += '<td>' + project.created_at + '</td>';
+      tr += '</tr>';
 
       tbody += tr;
     }
