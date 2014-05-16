@@ -27,18 +27,9 @@ class StudentController extends BaseController {
 
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        $rules = array(
-            'email'         => array('required', 'email', 'regex:/^[a-zA-Z0-9._-]+@mail\.[a-zA-Z0-9.-]+\.edu\.tw$/', 'unique:ilt_user_students,email')
-        );
-
-        $messages = array(
-            'email.required'        => '學校信箱欄位必須填寫！',
-            'email.email'           => '學校信箱欄位必須是正常的email格式',
-            'email.regex'           => '學校信箱欄位必須以@mail.xxx.edu.tw為位址。',
-            'email.unique'          => '本學校信箱已經認證過了！',
-        );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.CTRL.student.apply_email_process.rules');
+        $messages   = Config::get('validation.CTRL.student.apply_email_process.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
 
         if ($validator->fails()) {
@@ -84,25 +75,9 @@ class StudentController extends BaseController {
 
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        $rules = array(
-            'number'        => 'required|numeric|min:1000000000|max:9999999999',
-            'department'    => array('required', 'regex:/^[A-Z][0-9]{2}[A-C]?$/'),
-            'grade'         => 'required|numeric|between:0,6',
-        );
-
-        $messages = array(
-            'number.required'       => '學號欄位必須填寫！',
-            'number.numeric'        => '學號欄位只能填寫數字！',
-            'number.min'            => '學號欄位必須填寫十碼！',
-            'number.max'            => '學號欄位必須填寫十碼！',
-            'department.required'   => '科系欄位必須填寫！',
-            'department.regex'      => '科系欄位代號有誤！',
-            'grade.required'        => '年級欄位必須填寫！',
-            'grade.numeric'         => '年級欄位只能填寫數字！',
-            'grade.between'         => '年級欄位的範圍有誤！',
-        );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.CTRL.student.apply_files_process.rules');
+        $messages   = Config::get('validation.CTRL.studentapply_files_process.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             return Redirect::action('UserController@apply_student')->withErrors($validator)->withInput();

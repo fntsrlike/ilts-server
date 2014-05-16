@@ -94,15 +94,9 @@ _END;
         if(Input::has('agree')) {
             $this->beforeFilter('csrf', array('on' => 'post'));
 
-            $rules = array(
-                    'agree'    => 'accepted',
-                    );
-
-            $messages = array(
-                    'accepted'       => '您必須同意條款才能成為開發者！',
-                    );
-
-            $validator = Validator::make(Input::all(), $rules, $messages);
+            $rules      = Config::get('validation.CTRL.user.apply_developer.rules');
+            $messages   = Config::get('validation.CTRL.user.apply_developer.messages');
+            $validator  = Validator::make(Input::all(), $rules, $messages);
 
             if ($validator->fails()) {
                 return Redirect::action('UserController@apply_developer')->withErrors($validator)->withInput();

@@ -34,20 +34,9 @@ class API_ProjectController extends \BaseController {
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        $rules = array(
-                'name' 			=> 'required|unique:oauth_projects,name',
-                'describe'     	=> 'required',
-                'email'    		=> 'required',
-                );
-
-        $messages = array(
-                'name.required'    => '「專案名稱」是必填欄位！',
-                'name.unique'      => '「專案名稱」已經被申請過了！',
-                'describe.required'=> '「專案敘述」是必填欄位！',
-                'email.unique'     => '「電子郵件」是必填欄位！',
-                );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.API.project.store.rules');
+        $messages   = Config::get('validation.API.project.store.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             return Redirect::action('API_ProjectController@create')->withErrors($validator)->withInput();
@@ -101,20 +90,9 @@ class API_ProjectController extends \BaseController {
     public function update($id)
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
-        $rules = array(
-                'name' 			=> "required|unique:oauth_projects,name,{$id},project_id",
-                'describe'     	=> 'required',
-                'email'    		=> 'required',
-                );
-
-        $messages = array(
-                'name.required'    => '「專案名稱」是必填欄位！',
-                'name.unique'      => '「專案名稱」已經被申請過了！',
-                'describe.required'=> '「專案敘述」是必填欄位！',
-                'email.unique'     => '「電子郵件」是必填欄位！',
-                );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.API.project.update.rules');
+        $messages   = Config::get('validation.API.project.update.messages');;
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             return Redirect::action('API_ProjectController@edit')->withErrors($validator)->withInput();

@@ -175,33 +175,9 @@ class PortalController extends BaseController {
     public function register_process()
     {
 
-        $rules = array(
-                'username'    => 'required|alpha_dash',
-                'nickname'    => 'required',
-                'email'       => 'required|email',
-                'first_name'  => '',
-                'last_name'   => '',
-                'gender'      => '',
-                'birthday'    => 'date|date_format:Y/m/d',
-                'phone'       => 'numeric',
-                'address'     => '',
-                'website'     => 'url',
-                'gravater'    => 'email',
-                'description' => ''
-                );
-
-        $messages = array(
-            'required'      => '本欄位選項是必填的！',
-            'alpha_dash'    => '本欄位選項必需為大小寫英文字母（A-Z, a-z）、底線（_）、減號（-）組成。',
-            'email'         => '本欄位選項請符合email格式（Ex. foo@bar.com）。',
-            'url'           => '本欄位選項請符合網址(url)格式（Ex. http://www.foo.com ）。',
-            'numeric'       => '本欄位選項請符合純數字格式。',
-            'date'          => '本欄位選項請輸入有效的日期範圍。',
-            'date_format'   => '本欄位選項請符合純日期（yyyy/mm/dd）格式。'
-
-        );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.CTRL.portal.register_process.rules');
+        $messages   = Config::get('validation.CTRL.portal.register_process.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails())
         {

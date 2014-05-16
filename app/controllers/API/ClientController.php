@@ -37,19 +37,9 @@ class API_ClientController extends \BaseController {
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        $rules = array(
-                'project_id'        => 'required',
-                'input_from_uri'    => 'required',
-                'input_redirect_uri'=> 'required'
-                );
-
-        $messages = array(
-                'project_id'                    => '專案代碼有誤！',
-                'input_from_uri.required'       => '「應用程式來源白名單」是必填欄位！',
-                'input_redirect_uri.required'   => '「應用程式轉向白名單」是必填欄位！',
-                );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.API.client.store.rules');
+        $messages   = Config::get('validation.API.client.store.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             return Redirect::action('API_ClientController@create')->withErrors($validator)->withInput();
@@ -106,17 +96,9 @@ class API_ClientController extends \BaseController {
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        $rules = array(
-                'from_uri'    => 'required',
-                'redirect_uri'=> 'required',
-                );
-
-        $messages = array(
-                'from_uri.required'       => '「應用程式來源白名單」是必填欄位！',
-                'redirect_uri.required'   => '「應用程式轉向白名單」是必填欄位！',
-                );
-
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $rules      = Config::get('validation.API.client.update.rules');
+        $messages   = Config::get('validation.API.client.update.messages');
+        $validator  = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             return Redirect::action('API_ClientController@edit', $id)->withErrors($validator)->withInput();
